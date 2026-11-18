@@ -598,6 +598,11 @@ body.focus .boardwrap{max-width:min(1040px,100%)}
 .egqopts button:disabled{cursor:default;opacity:1}
 .egqx{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--panel2);font-size:13.5px;line-height:1.75}
 .egqend{text-align:center}.egqend .big{font-size:44px;font-weight:900;color:var(--accent2);margin:8px 0}
+/* laptops and desktops: the whole board (with the player bars and move buttons) fits the screen height */
+@media (min-width:921px){
+  .boardwrap{max-width:min(780px,max(420px,calc(100vh - 230px)))}
+  body.focus .boardwrap{max-width:min(1040px,100%,max(420px,calc(100vh - 170px)))}
+}
 .lbtab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-weight:700;font-size:13px;cursor:pointer;transition:transform .15s,background .2s}
 .lbtab i{font-style:normal;font-size:20px}.lbtab.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1b1405;border-color:transparent;transform:translateY(-2px);box-shadow:0 6px 16px rgba(224,163,58,.3)}
 .lbstage{padding:14px 10px 6px;overflow:hidden}
