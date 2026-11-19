@@ -571,6 +571,26 @@ body.focus .boardwrap{max-width:min(1040px,100%)}
 @media (max-width:520px){.opsel #opModes{grid-template-columns:repeat(2,1fr)}}
 body.focus #opInfo{overflow:auto}
 .optree{font-size:13.5px;line-height:1.5}
+/* phones, board in focus: the six modes in one scrolling row, so the board keeps its size */
+@media (max-width:640px){
+  body.focus #openApp .opsel #opModes{display:flex!important;overflow-x:auto;gap:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  body.focus #openApp .opsel #opModes::-webkit-scrollbar{display:none}
+  body.focus #openApp .opsel #opModes .mode{flex:0 0 auto;padding:7px 11px}
+  body.focus #openApp .opsel #opModes .mode .t{white-space:nowrap}
+}
+.tsvgw{overflow:auto;border:1px solid #2c3142;border-radius:12px;background:radial-gradient(120% 90% at 0% 50%,#1d2a1f 0%,#151820 60%);-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;max-height:62vh}
+body.focus .tsvgw{max-height:none}
+.tsvgw svg{display:block}
+.tsvg .tn{cursor:pointer}
+.tsvg .tn text{font:600 12px ui-monospace,Menlo,Consolas,monospace;fill:#eef1f7;direction:ltr;unicode-bidi:plaintext}
+.tsvg .tn .nm{font:500 10.5px system-ui,sans-serif;fill:#aab2c5}
+.tsvg .tn:hover rect{filter:brightness(1.25)}
+.ttools{display:flex;gap:6px;align-items:center;margin:0 0 8px;flex-wrap:wrap}
+.ttools button{padding:6px 10px}
+.treefs{position:fixed;inset:0;z-index:3000;background:var(--bg);display:flex;flex-direction:column}
+.treefs .tfh{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #2c3142;padding-top:max(10px,env(safe-area-inset-top))}
+.treefs .tfh b{flex:1;font-size:15px}
+.treefs .tsvgw{flex:1;max-height:none;border:0;border-radius:0}
 .optree .tsum{display:flex;align-items:center;gap:10px;margin:4px 0 10px}
 .optree .tbar{flex:1;height:8px;border-radius:5px;background:#323748;overflow:hidden}.optree .tbar i{display:block;height:100%;background:var(--ok)}
 .optree .lg{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:8px}
@@ -10311,6 +10331,7 @@ const APP_BUILD = 26;
     const ft = $("openApp").querySelector(".ftitle");
     if (ft && ZX_OPENINGS[OP.key]) ft.textContent = ZX_OPENINGS[OP.key].title;
     if (OP.mode === "tree") treeRender(); else if (OP.mode === "traps") { if (TP.cur && !TP.play) trapShow(); else if (!TP.cur) trapsHome(); }
+    if (OP.mode !== "tree") treeFullClose();
     setTimeout(fitFocus, 120);
   }
   function initOpenings() {
@@ -15110,18 +15131,112 @@ const APP_BUILD = 26;
     const acts = leafLine ? `<div class="acts" style="margin-top:8px;display:flex;gap:6px"><button data-tw="${leafLine.id}">▶ ${T("شاهد", "Watch")}</button><button class="primary" data-tdr="${leafLine.id}">🧠 ${T("درّبني عليه", "Train me")}</button></div>` : "";
     const P = opPane();
     if (P !== $("opPanel")) $("opPanel").innerHTML = "";
+    const svg = treeSvg(data, OP.path.join(" "), 1);
     P.innerHTML = `<div class="optree"><h3>🌳 ${t10("tree_h")} — ${rich(data.op.title)}</h3>
       <div class="tsum"><div class="tbar"><i style="width:${pct}%"></i></div><b>${done}/${all.length}</b><span>${pct}%</span></div>${legend}
-      <div class="tnode root">${build(data.root, [], [], 0)}</div>${acts}</div>`;
-    P.querySelectorAll("[data-tt]").forEach(el => el.onclick = e => { e.stopPropagation(); const id = el.dataset.tt; if (open.has(id)) open.delete(id); else open.add(id); el.closest(".tnode").classList.toggle("closed"); el.textContent = el.closest(".tnode").classList.contains("closed") ? "▸" : "▾"; });
-    P.querySelectorAll("[data-tp]").forEach(el => el.onclick = () => { OP.path = el.dataset.tp.split(" "); const pp = OP.path; for (let i = 1; i < pp.length; i++) open.add(pp.slice(0, i).join(" ")); treeRender(); });
+      <div class="ttools"><button class="primary" data-tfull>⤢ ${T("افتح الشجرة كاملة", "Open the full tree")}</button></div>
+      <div class="tsvgw" id="tsvgIn">${svg}</div>${acts}</div>`;
+    P.querySelector("[data-tfull]").onclick = () => treeFull();
+    treeBind(P.querySelector("#tsvgIn"), false);
+    treeScrollCur(P.querySelector("#tsvgIn"));
     P.querySelectorAll("[data-tw]").forEach(b => b.onclick = () => watchLine(findLine(b.dataset.tw), () => treeRender()));
     P.querySelectorAll("[data-tdr]").forEach(b => b.onclick = () => { switchMode("drill"); startDrill([findLine(b.dataset.tdr)]); });
     opTip(leafLine ? `<b>💡 ${T("الفكرة", "The idea")}:</b> ${rich(leafLine.i)}` : `<span style="color:var(--muted)">${t10("tree_tip")}</span>`);
     opLogRender(OP.key, OP.path);
-    const c = P.querySelector(".trow.cur"); if (c) c.scrollIntoView({ block: "nearest" });
+    if (TREE.fs) treeFullRender();
   }
-  const TREE = { open: {} };
+  const TREE = { open: {}, fs: null, zoom: 1 };
+
+  // ---- the tree drawing: branch points and leaves are nodes, a run of single moves is one label;
+  // branches get thicker where more lines pass, and greener as their lines are mastered
+  function treeModel(data) {
+    const san0 = (k, s) => (k % 2 === 0 ? (k / 2 + 1) + "." : (k === 0 ? "1…" : "")) + s;
+    const stOf = ls => { const m = ls.filter(lineMastered).length; return { m, st: m === ls.length ? "m" : (m || ls.some(lineStarted)) ? "p" : "n" }; };
+    const mk = (nd, path, depth) => {
+      const kids = [];
+      for (const [u, c] of nd.children) {
+        let p = path.concat(u), n = c.node; const seg = [san0(p.length - 1, c.san)];
+        while (n.children.size === 1 && !n.ends) { const [[u2, c2]] = [...n.children]; p = p.concat(u2); seg.push(san0(p.length - 1, c2.san)); n = c2.node; }
+        const s = stOf(n.lines);
+        const name = n.ends ? n.ends[0].n : "";
+        kids.push({ id: p.join(" "), seg: seg.join(" "), lines: n.lines.length, m: s.m, st: s.st, leaf: !n.children.size, name, depth, kids: n.children.size ? mk(n, p, depth + 1) : [] });
+      }
+      return kids;
+    };
+    const s = stOf(data.lines);
+    return { id: "", seg: data.op.title, lines: data.lines.length, m: s.m, st: s.st, root: true, depth: -1, kids: mk(data.root, [], 0) };
+  }
+  function treeSvg(data, cur, zoom) {
+    const R = treeModel(data), ROW = 46, GAP = 34, PADX = 18, PADY = 18;
+    const plain = s => String(s || "").replace(/<[^>]+>/g, "");
+    const MAXW = 250, tw = s => Math.min(MAXW, 18 + [...s].length * 7.3);
+    const fit = (s, w, cw) => { const a = [...s], n = Math.max(3, Math.floor((w - 16) / cw)); return a.length > n ? a.slice(0, n - 1).join("") + "…" : s; };
+    // columns: widest label at each depth
+    const colW = [], walk = (n, f) => { f(n); n.kids.forEach(k => walk(k, f)); };
+    walk(R, n => { const d = n.depth + 1, w = n.root ? Math.min(200, 40 + [...plain(n.seg)].length * 8) : Math.max(tw(n.seg), n.leaf && n.name ? Math.min(MAXW, 18 + [...plain(n.name)].length * 6) : 0); colW[d] = Math.max(colW[d] || 0, w); });
+    const colX = []; let x = PADX; colW.forEach((w, d) => { colX[d] = x; x += w + GAP; });
+    let leafI = 0;
+    const place = n => { if (!n.kids.length) { n.y = PADY + leafI * ROW + ROW / 2; leafI++; } else { n.kids.forEach(place); n.y = (n.kids[0].y + n.kids[n.kids.length - 1].y) / 2; } n.x = colX[n.depth + 1]; n.w = n.root ? colW[0] : (n.leaf ? colW[n.depth + 1] : tw(n.seg)); };
+    place(R);
+    const W = x - GAP + PADX, H = PADY * 2 + Math.max(1, leafI) * ROW, total = R.lines || 1;
+    const onPath = id => id === "" || cur === id || cur.startsWith(id + " ");
+    const col = { m: ["#1f6b3d", "#5cc27a"], p: ["#5a3e12", "#e0a33a"], n: ["#232733", "#454c5f"] };
+    const edgeC = st => st === "m" ? "#4fbf73" : st === "p" ? "#c98b2e" : "#7a5a3a";
+    let edges = "", nodes = "";
+    walk(R, n => {
+      for (const k of n.kids) {
+        const x1 = n.x + n.w, y1 = n.y, x2 = k.x, y2 = k.y, mx = (x1 + x2) / 2;
+        const sw = (2 + 7 * Math.sqrt(k.lines / total)).toFixed(1), hot = onPath(k.id) && cur !== "";
+        edges += `<path d="M${x1} ${y1} C${mx} ${y1},${mx} ${y2},${x2} ${y2}" fill="none" stroke="${hot ? "#f2c46d" : edgeC(k.st)}" stroke-width="${sw}" stroke-linecap="round" opacity="${hot ? 1 : .85}"/>`;
+      }
+      const [bg, bd] = n.root ? ["#5b3b1f", "#a8743f"] : col[n.st];
+      const isCur = cur === n.id, hot = onPath(n.id) && !n.root;
+      const h = n.leaf && n.name ? 36 : 26, y = n.y - h / 2;
+      const icon = n.root ? "🌳 " : n.leaf ? (n.st === "m" ? "🍃 " : n.st === "p" ? "🌱 " : "◦ ") : "";
+      const txt = esc(fit(icon + (n.root ? plain(n.seg) : n.seg), n.w, n.root ? 8 : 7.3));
+      const cnt = n.root || !n.leaf ? `<title>${n.m}/${n.lines}</title>` : `<title>${esc(plain(n.name))} — ${n.m}/${n.lines}</title>`;
+      nodes += `<g class="tn${isCur ? " cur" : ""}" data-tp="${n.id}" data-tid="${n.id}">${cnt}<rect x="${n.x}" y="${y}" width="${n.w}" height="${h}" rx="${n.root ? 13 : 10}" fill="${bg}" stroke="${isCur ? "#f2c46d" : hot ? "#c9a04f" : bd}" stroke-width="${isCur ? 3 : hot ? 2 : 1.2}"/>
+        <text x="${n.x + 9}" y="${n.leaf && n.name ? y + 15 : n.y + 4}">${txt}</text>${n.leaf && n.name ? `<text class="nm" x="${n.x + 9}" y="${y + 29}">${esc(fit(plain(n.name), n.w, 6))}</text>` : ""}
+        ${!n.leaf && !n.root ? `<text class="nm" x="${n.x + n.w - 4}" y="${y - 4}" text-anchor="end">${n.m}/${n.lines}</text>` : ""}</g>`;
+    });
+    return `<svg class="tsvg" xmlns="http://www.w3.org/2000/svg" width="${Math.round(W * zoom)}" height="${Math.round(H * zoom)}" viewBox="0 0 ${W} ${H}" direction="ltr">${edges}${nodes}</svg>`;
+  }
+  function treeBind(box, full) {
+    box.querySelectorAll(".tn").forEach(g => g.onclick = () => {
+      const id = g.dataset.tp; OP.path = id ? id.split(" ") : [];
+      zxT("openings", "tree_node", OP.key);
+      if (full) treeFullClose();
+      treeRender();
+    });
+  }
+  function treeScrollCur(box) {
+    const c = box && box.querySelector(".tn.cur rect"); if (!c) return;
+    const b = box.getBoundingClientRect(), r = c.getBoundingClientRect();
+    box.scrollLeft += (r.left + r.width / 2) - (b.left + b.width / 2);
+    box.scrollTop += (r.top + r.height / 2) - (b.top + b.height / 2);
+  }
+  // full screen: the whole tree with zoom; tapping a branch shows it on the board
+  function treeFull() {
+    if (TREE.fs) return;
+    zxT("openings", "tree_full", OP.key);
+    const d = document.createElement("div"); d.className = "treefs"; d.setAttribute("dir", "rtl");
+    d.innerHTML = `<div class="tfh"><button class="fbtn" data-tclose>✕</button><b></b><button data-tz="-1">−</button><button data-tz="0">100%</button><button data-tz="1">+</button></div><div class="tsvgw" id="tsvgFs"></div>`;
+    document.body.appendChild(d); TREE.fs = d;
+    d.querySelector("[data-tclose]").onclick = treeFullClose;
+    d.querySelectorAll("[data-tz]").forEach(b => b.onclick = () => { const z = +b.dataset.tz; TREE.zoom = z === 0 ? 1 : Math.min(2.2, Math.max(.45, TREE.zoom * (z > 0 ? 1.25 : .8))); treeFullRender(); });
+    treeFullRender();
+  }
+  function treeFullRender() {
+    const d = TREE.fs; if (!d) return;
+    const data = OP.data[OP.key]; if (!data) { treeFullClose(); return; }
+    d.querySelector(".tfh b").innerHTML = "🌳 " + rich(data.op.title);
+    d.querySelector("[data-tz=\"0\"]").textContent = Math.round(TREE.zoom * 100) + "%";
+    const box = d.querySelector("#tsvgFs");
+    box.innerHTML = treeSvg(data, OP.path.join(" "), TREE.zoom);
+    treeBind(box, true); treeScrollCur(box);
+  }
+  function treeFullClose() { if (TREE.fs) { TREE.fs.remove(); TREE.fs = null; } }
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && TREE.fs) treeFullClose(); });
 
   // ----- opening traps
   const TP = { cur: null, i: 0, play: false };
@@ -15794,7 +15909,7 @@ const APP_BUILD = 26;
     for (const c of wrap.children) {
       if (c === row || c.offsetParent === null || (side && (c === grow || c.classList.contains("plylog")))) continue;
       const st = getComputedStyle(c);
-      others += (c === grow ? Math.min(c.offsetHeight, 150) : c.offsetHeight) + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
+      others += (c === grow ? Math.min(c.offsetHeight, (typeof OP !== "undefined" && (OP.mode === "tree" || OP.mode === "traps") && focusPage === "openings") ? 96 : 150) : c.offsetHeight) + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
     }
     const ev = row.querySelector(".evalbar"), evw = ev && ev.offsetParent !== null ? ev.offsetWidth + 8 : 0;
     const size = Math.floor(Math.max(220, Math.min(wrap.clientWidth - (side ? 336 : 0), H - others + evw)));
