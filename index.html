@@ -15697,6 +15697,7 @@ const APP_BUILD = 26;
     if (e.ev === "noconsent") { ADS.ready = false; return; }
     if (e.slot === "admin_test") { const m = $("adsTestMsg"); if (m) m.textContent = e.ev === "shown" || e.ev === "closed" ? T("✓ ظهر الإعلان التجريبي", "✓ Test ad shown") + (e.earned ? " · " + T("المكافأة وصلت", "reward earned") : "") : T("✗ ما ظهر الإعلان", "✗ No ad") + (e.code !== undefined ? " (" + e.code + ")" : "") + (e.msg ? " — " + e.msg : ""); return; }
     if (e.ev === "failed" && ADS.nat && e.slot === ADS.nat) adNativeGone();
+    if (e.ev === "shown" && ADS.nat && e.slot === ADS.nat && ADS.natEl) ADS.natEl.style.visibility = "";
     const w = ADS.wait[e.slot];
     if (w && (e.ev === "closed" || e.ev === "failed")) { delete ADS.wait[e.slot]; w(e); }
   };
@@ -15713,8 +15714,11 @@ const APP_BUILD = 26;
   // image ad drawn by the app over a box of the page (el); gone when adNativeHide() is called
   function adNative(name, el) {
     const s = adSlot(name); if (!s || s.type !== "native" || !el || typeof ZXAds.nativeAd !== "function") return false;
+    // no real ad unit yet (and not testing): nothing to show, so no empty box either
+    if (!ADS.cfg.test && !/^ca-app-pub-\d{16}\/\d{10}$/.test(s.unit || "")) return false;
     adNativeHide();
-    el.hidden = false; ADS.nat = name; ADS.natEl = el;
+    // the box keeps its place but stays invisible until the ad has really loaded
+    el.hidden = false; el.style.visibility = "hidden"; ADS.nat = name; ADS.natEl = el;
     const rect = () => { const r = el.getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; };
     // wait for the screen's slide-in animation before measuring, then follow the box
     ADS.natT = setTimeout(() => { if (ADS.nat !== name) return; const r = rect(); try { ZXAds.nativeAd(name, s.unit || "", !!ADS.cfg.test, r[0], r[1], r[2], r[3]); } catch (e) { adNativeGone(); }
