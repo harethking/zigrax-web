@@ -627,6 +627,16 @@ body.focus .tsvgw{max-height:none}
 @media (max-width:560px){.mgacc{grid-template-columns:1fr}}
 .mgacc label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
 .mgacc input{width:100%;direction:ltr}
+.mgin{display:flex;gap:6px}.mgin input{flex:1;min-width:0}.mgin button{flex:none;padding:6px 10px}
+.mgtabs{grid-template-columns:1fr 1fr;margin:0 0 12px}
+.scg{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media (max-width:560px){.scg{grid-template-columns:1fr}}
+.scbox{background:#1f2330;border:1px solid var(--line);border-radius:12px;padding:10px}
+.scbox h4{margin:0 0 8px;font-size:14px}.scwdl{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:6px 0}
+.scwdl i{display:block}.scwdl .w{background:#5fbf7f}.scwdl .d{background:#8d93a5}.scwdl .l{background:#d9665b}
+.scnum{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}.scnum b{color:var(--text)}
+.scop{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:12.5px;padding:5px 0;border-top:1px solid var(--line)}
+.scop span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scop em{font-style:normal;color:var(--muted)}
+.scfm{font-size:12.5px;margin-top:6px;color:var(--muted)}.scfm b{color:var(--text);direction:ltr;unicode-bidi:isolate}
 .mgst{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.7}
 .mgf{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
 .mgf button{padding:5px 10px;border-radius:9px;font-size:12.5px}
@@ -2713,6 +2723,7 @@ if (typeof module !== "undefined") module.exports = { ZX_I18N };
 })(window);
 </script>
 <script>(function () { var A = {"es":{"Rankings":"Clasificaciones","Official FIDE":"FIDE oficial","Classical":"Clásicas","Rapid":"Rápidas","Blitz":"Blitz","Bullet":"Bala","World":"Mundial","Arab world":"Mundo árabe","Search a player":"Buscar jugador","Loading…":"Cargando…","The ranking is being prepared, check back soon.":"La clasificación se está preparando, vuelve pronto.","Couldn't load. Check your connection.":"No se pudo cargar. Revisa tu conexión.","No players":"Sin jugadores","Updated":"Actualizado","ranked players":"jugadores clasificados","You":"Tú","Your rank":"Tu puesto","Outside the top 200":"Fuera del top 200","Link your Chess.com account in My games to see your rank.":"Vincula tu cuenta de Chess.com en Mis partidas para ver tu puesto.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com: jugadores que indican este país en su perfil, con 10+ partidas y activos en los últimos 4 meses.","Chess.com world: the top 50 players.":"Chess.com mundial: los 50 mejores.","FIDE: the official monthly rating list, active players only.":"FIDE: lista oficial mensual, solo jugadores activos.","Country":"País","games":"partidas"},"fr":{"Rankings":"Classements","Official FIDE":"FIDE officiel","Classical":"Classique","Rapid":"Rapide","Blitz":"Blitz","Bullet":"Bullet","World":"Monde","Arab world":"Monde arabe","Search a player":"Chercher un joueur","Loading…":"Chargement…","The ranking is being prepared, check back soon.":"Le classement est en préparation, reviens bientôt.","Couldn't load. Check your connection.":"Chargement impossible. Vérifie ta connexion.","No players":"Aucun joueur","Updated":"Mis à jour","ranked players":"joueurs classés","You":"Toi","Your rank":"Ton rang","Outside the top 200":"Hors du top 200","Link your Chess.com account in My games to see your rank.":"Relie ton compte Chess.com dans Mes parties pour voir ton rang.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com : joueurs ayant ce pays sur leur profil, 10 parties ou plus et actifs ces 4 derniers mois.","Chess.com world: the top 50 players.":"Chess.com monde : les 50 meilleurs.","FIDE: the official monthly rating list, active players only.":"FIDE : liste officielle mensuelle, joueurs actifs uniquement.","Country":"Pays","games":"parties"},"de":{"Rankings":"Ranglisten","Official FIDE":"Offiziell FIDE","Classical":"Klassisch","Rapid":"Schnellschach","Blitz":"Blitz","Bullet":"Bullet","World":"Welt","Arab world":"Arabische Welt","Search a player":"Spieler suchen","Loading…":"Wird geladen…","The ranking is being prepared, check back soon.":"Die Rangliste wird vorbereitet, schau bald wieder vorbei.","Couldn't load. Check your connection.":"Laden fehlgeschlagen. Prüfe deine Verbindung.","No players":"Keine Spieler","Updated":"Aktualisiert","ranked players":"gewertete Spieler","You":"Du","Your rank":"Dein Rang","Outside the top 200":"Außerhalb der Top 200","Link your Chess.com account in My games to see your rank.":"Verknüpfe dein Chess.com-Konto unter Meine Partien, um deinen Rang zu sehen.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com: Spieler mit diesem Land im Profil, 10+ Partien und in den letzten 4 Monaten aktiv.","Chess.com world: the top 50 players.":"Chess.com Welt: die Top 50.","FIDE: the official monthly rating list, active players only.":"FIDE: offizielle Monatsliste, nur aktive Spieler.","Country":"Land","games":"Partien"},"ru":{"Rankings":"Рейтинги","Official FIDE":"Официальный FIDE","Classical":"Классика","Rapid":"Рапид","Blitz":"Блиц","Bullet":"Пуля","World":"Мир","Arab world":"Арабский мир","Search a player":"Поиск игрока","Loading…":"Загрузка…","The ranking is being prepared, check back soon.":"Рейтинг готовится, загляни позже.","Couldn't load. Check your connection.":"Не удалось загрузить. Проверь подключение.","No players":"Нет игроков","Updated":"Обновлено","ranked players":"игроков в рейтинге","You":"Ты","Your rank":"Твоё место","Outside the top 200":"Вне топ-200","Link your Chess.com account in My games to see your rank.":"Привяжи аккаунт Chess.com в «Мои партии», чтобы увидеть своё место.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com: игроки, указавшие эту страну в профиле, с 10+ партиями и активные за последние 4 месяца.","Chess.com world: the top 50 players.":"Chess.com мир: топ-50 игроков.","FIDE: the official monthly rating list, active players only.":"FIDE: официальный ежемесячный рейтинг-лист, только активные.","Country":"Страна","games":"партий"},"tr":{"Rankings":"Sıralamalar","Official FIDE":"Resmi FIDE","Classical":"Klasik","Rapid":"Hızlı","Blitz":"Yıldırım","Bullet":"Kurşun","World":"Dünya","Arab world":"Arap dünyası","Search a player":"Oyuncu ara","Loading…":"Yükleniyor…","The ranking is being prepared, check back soon.":"Sıralama hazırlanıyor, birazdan tekrar bak.","Couldn't load. Check your connection.":"Yüklenemedi. Bağlantını kontrol et.","No players":"Oyuncu yok","Updated":"Güncellendi","ranked players":"sıralı oyuncu","You":"Sen","Your rank":"Sıran","Outside the top 200":"İlk 200 dışında","Link your Chess.com account in My games to see your rank.":"Sıranı görmek için Maçlarım'dan Chess.com hesabını bağla.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com: profilinde bu ülkeyi yazan, 10+ maçı olan ve son 4 ayda aktif oyuncular.","Chess.com world: the top 50 players.":"Chess.com dünya: en iyi 50 oyuncu.","FIDE: the official monthly rating list, active players only.":"FIDE: resmi aylık liste, yalnızca aktif oyuncular.","Country":"Ülke","games":"maç"},"fa":{"Rankings":"رده‌بندی‌ها","Official FIDE":"رسمی FIDE","Classical":"کلاسیک","Rapid":"رپید","Blitz":"برق‌آسا","Bullet":"گلوله‌ای","World":"جهانی","Arab world":"جهان عرب","Search a player":"جستجوی بازیکن","Loading…":"در حال بارگذاری…","The ranking is being prepared, check back soon.":"رده‌بندی در حال آماده‌سازی است، کمی بعد سر بزن.","Couldn't load. Check your connection.":"بارگذاری نشد. اتصال را بررسی کن.","No players":"بازیکنی نیست","Updated":"آخرین به‌روزرسانی","ranked players":"بازیکن رده‌بندی‌شده","You":"تو","Your rank":"رتبه تو","Outside the top 200":"خارج از ۲۰۰ نفر برتر","Link your Chess.com account in My games to see your rank.":"برای دیدن رتبه‌ات، حساب Chess.com را در «بازی‌های من» وصل کن.","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com: بازیکنانی که این کشور را در پروفایل نوشته‌اند، ۱۰+ بازی دارند و در ۴ ماه اخیر فعال بوده‌اند.","Chess.com world: the top 50 players.":"Chess.com جهانی: ۵۰ بازیکن برتر.","FIDE: the official monthly rating list, active players only.":"FIDE: فهرست رسمی ماهانه، فقط بازیکنان فعال.","Country":"کشور","games":"بازی"},"zh":{"Rankings":"排名","Official FIDE":"FIDE 官方","Classical":"慢棋","Rapid":"快棋","Blitz":"超快棋","Bullet":"子弹棋","World":"全球","Arab world":"阿拉伯世界","Search a player":"搜索棋手","Loading…":"加载中…","The ranking is being prepared, check back soon.":"排名正在准备中，请稍后再来。","Couldn't load. Check your connection.":"无法加载，请检查网络。","No players":"没有棋手","Updated":"更新于","ranked players":"名上榜棋手","You":"你","Your rank":"你的名次","Outside the top 200":"未进前200","Link your Chess.com account in My games to see your rank.":"在“我的对局”中绑定 Chess.com 账号即可查看名次。","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com：资料中填写该国家、对局 10 局以上且近 4 个月活跃的棋手。","Chess.com world: the top 50 players.":"Chess.com 全球：前 50 名。","FIDE: the official monthly rating list, active players only.":"FIDE：官方月度等级分表，仅限活跃棋手。","Country":"国家","games":"局"},"ja":{"Rankings":"ランキング","Official FIDE":"FIDE 公式","Classical":"クラシカル","Rapid":"ラピッド","Blitz":"ブリッツ","Bullet":"バレット","World":"世界","Arab world":"アラブ世界","Search a player":"プレイヤー検索","Loading…":"読み込み中…","The ranking is being prepared, check back soon.":"ランキングを準備中です。少し後でもう一度どうぞ。","Couldn't load. Check your connection.":"読み込めませんでした。接続を確認してください。","No players":"プレイヤーなし","Updated":"更新日","ranked players":"人がランク入り","You":"あなた","Your rank":"あなたの順位","Outside the top 200":"トップ200圏外","Link your Chess.com account in My games to see your rank.":"「マイゲーム」で Chess.com アカウントを連携すると順位が表示されます。","Chess.com: players who list this country on their profile, with 10+ games and active in the last 4 months.":"Chess.com：プロフィールにこの国を設定し、10局以上・直近4か月に活動したプレイヤー。","Chess.com world: the top 50 players.":"Chess.com 世界：トップ50。","FIDE: the official monthly rating list, active players only.":"FIDE：公式月間レーティングリスト（アクティブのみ）。","Country":"国","games":"局"}}, T = window.ZX_TRS || (window.ZX_TRS = {}); for (var l in A) { var t = T[l] || (T[l] = {}); for (var k in A[l]) t[k] = A[l][k]; } })();</script>
+<script>(function () { var A = {"es":{"My games":"Mis partidas","Scout a player":"Espiar a un jugador","Unlink":"Desvincular","Unlinking removes this account's games from the app. Sure?":"Al desvincular se borran las partidas de esta cuenta. ¿Seguro?","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"Estudia el estilo de cualquier jugador: tu próximo rival o alguien que te guste. Sus partidas quedan separadas de las tuyas.","Scout":"Espiar","Stop scouting":"Dejar de espiar","Fetching games…":"Obteniendo partidas…","Player not found.":"Jugador no encontrado.","As White":"Con blancas","As Black":"Con negras","Win rate":"Victorias","Top openings":"Aperturas favoritas","First move":"Primera jugada","Reply to":"Respuesta a","games":"partidas","Chess.com accuracy":"Precisión Chess.com","Latest rating":"Último rating","Their games":"Sus partidas","last 12 months":"últimos 12 meses","W":"V","D":"T","L":"D"},"fr":{"My games":"Mes parties","Scout a player":"Observer un joueur","Unlink":"Délier","Unlinking removes this account's games from the app. Sure?":"Délier supprime les parties de ce compte. Sûr ?","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"Étudie le style de n'importe quel joueur : ton prochain adversaire ou un joueur que tu aimes. Ses parties restent séparées des tiennes.","Scout":"Observer","Stop scouting":"Arrêter","Fetching games…":"Récupération des parties…","Player not found.":"Joueur introuvable.","As White":"Avec les Blancs","As Black":"Avec les Noirs","Win rate":"Taux de victoire","Top openings":"Ouvertures favorites","First move":"Premier coup","Reply to":"Réponse à","games":"parties","Chess.com accuracy":"Précision Chess.com","Latest rating":"Dernier classement","Their games":"Ses parties","last 12 months":"12 derniers mois","W":"G","D":"N","L":"P"},"de":{"My games":"Meine Partien","Scout a player":"Spieler beobachten","Unlink":"Trennen","Unlinking removes this account's games from the app. Sure?":"Beim Trennen werden die Partien dieses Kontos entfernt. Sicher?","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"Studiere den Stil eines Spielers: deinen nächsten Gegner oder ein Vorbild. Seine Partien bleiben von deinen getrennt.","Scout":"Beobachten","Stop scouting":"Beenden","Fetching games…":"Partien werden geladen…","Player not found.":"Spieler nicht gefunden.","As White":"Mit Weiß","As Black":"Mit Schwarz","Win rate":"Siegquote","Top openings":"Häufigste Eröffnungen","First move":"Erster Zug","Reply to":"Antwort auf","games":"Partien","Chess.com accuracy":"Chess.com-Genauigkeit","Latest rating":"Letzte Wertung","Their games":"Seine Partien","last 12 months":"letzte 12 Monate","W":"S","D":"R","L":"N"},"ru":{"My games":"Мои партии","Scout a player":"Изучить игрока","Unlink":"Отвязать","Unlinking removes this account's games from the app. Sure?":"Отвязка удалит партии этого аккаунта. Уверен?","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"Изучи стиль любого игрока: следующего соперника или любимого игрока. Его партии хранятся отдельно от твоих.","Scout":"Изучить","Stop scouting":"Прекратить","Fetching games…":"Загружаю партии…","Player not found.":"Игрок не найден.","As White":"Белыми","As Black":"Чёрными","Win rate":"Процент побед","Top openings":"Любимые дебюты","First move":"Первый ход","Reply to":"Ответ на","games":"партий","Chess.com accuracy":"Точность Chess.com","Latest rating":"Последний рейтинг","Their games":"Его партии","last 12 months":"за 12 месяцев","W":"В","D":"Н","L":"П"},"tr":{"My games":"Maçlarım","Scout a player":"Oyuncu izle","Unlink":"Bağlantıyı kes","Unlinking removes this account's games from the app. Sure?":"Bağlantıyı kesmek bu hesabın maçlarını siler. Emin misin?","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"Herhangi bir oyuncunun stilini incele: sıradaki rakibin ya da sevdiğin bir oyuncu. Maçları seninkilerden ayrı kalır.","Scout":"İzle","Stop scouting":"İzlemeyi bırak","Fetching games…":"Maçlar alınıyor…","Player not found.":"Oyuncu bulunamadı.","As White":"Beyazla","As Black":"Siyahla","Win rate":"Kazanma oranı","Top openings":"En çok açılışlar","First move":"İlk hamle","Reply to":"Cevabı","games":"maç","Chess.com accuracy":"Chess.com isabeti","Latest rating":"Son puan","Their games":"Maçları","last 12 months":"son 12 ay","W":"G","D":"B","L":"M"},"fa":{"My games":"بازی‌های من","Scout a player":"زیر نظر گرفتن بازیکن","Unlink":"جدا کردن","Unlinking removes this account's games from the app. Sure?":"جدا کردن، بازی‌های این حساب را پاک می‌کند. مطمئنی؟","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"سبک هر بازیکنی را بررسی کن: حریف بعدی یا بازیکن محبوبت. بازی‌هایش جدا از بازی‌های تو می‌ماند.","Scout":"زیر نظر بگیر","Stop scouting":"توقف","Fetching games…":"در حال دریافت بازی‌ها…","Player not found.":"بازیکن پیدا نشد.","As White":"با سفید","As Black":"با سیاه","Win rate":"درصد برد","Top openings":"پرتکرارترین گشایش‌ها","First move":"حرکت اول","Reply to":"پاسخ به","games":"بازی","Chess.com accuracy":"دقت Chess.com","Latest rating":"آخرین ریتینگ","Their games":"بازی‌هایش","last 12 months":"۱۲ ماه اخیر","W":"برد","D":"مساوی","L":"باخت"},"zh":{"My games":"我的对局","Scout a player":"研究对手","Unlink":"解绑","Unlinking removes this account's games from the app. Sure?":"解绑会删除该账号的对局，确定吗？","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"研究任意棋手的风格：你的下一个对手或喜欢的棋手。其对局与你的分开保存。","Scout":"研究","Stop scouting":"停止研究","Fetching games…":"正在获取对局…","Player not found.":"未找到该棋手。","As White":"执白","As Black":"执黑","Win rate":"胜率","Top openings":"常用开局","First move":"第一步","Reply to":"应对","games":"局","Chess.com accuracy":"Chess.com 准确率","Latest rating":"最新等级分","Their games":"其对局","last 12 months":"最近 12 个月","W":"胜","D":"和","L":"负"},"ja":{"My games":"マイゲーム","Scout a player":"プレイヤー偵察","Unlink":"連携解除","Unlinking removes this account's games from the app. Sure?":"連携解除するとこのアカウントの対局が削除されます。よろしいですか？","Study any player's style: your next opponent or a player you like. Their games stay separate from yours.":"次の対戦相手やお気に入りの選手のスタイルを研究。その対局はあなたの対局とは別に保存されます。","Scout":"偵察","Stop scouting":"偵察をやめる","Fetching games…":"対局を取得中…","Player not found.":"プレイヤーが見つかりません。","As White":"白番","As Black":"黒番","Win rate":"勝率","Top openings":"よく指すオープニング","First move":"初手","Reply to":"への応手","games":"局","Chess.com accuracy":"Chess.com 精度","Latest rating":"最新レーティング","Their games":"対局一覧","last 12 months":"直近12か月","W":"勝","D":"分","L":"敗"}}, T = window.ZX_TRS || (window.ZX_TRS = {}); for (var l in A) { var t = T[l] || (T[l] = {}); for (var k in A[l]) t[k] = A[l][k]; } })();</script>
 <script>
 // Interface language: saved choice, otherwise the device language; unknown languages fall back to English.
 (function () {
@@ -15576,6 +15587,116 @@ const APP_BUILD = 28;
     step();
   }
 
+  // ----- Scout a player: another player's recent games (kept apart, ids "sc:"), with a style report
+  const SC = Object.assign({ games: [], busy: false, err: "", tc: "all", show: 30 }, { who: store.get("zx_scout", null) });
+  const scFamily = n => { n = String(n || "").split(":")[0].trim(); const m = /^(.*?\b(?:Defense|Defence|Opening|Game|Gambit|Attack|System|Variation))\b/i.exec(n); return (m ? m[1] : n).slice(0, 48); };
+  const scFirst = pgn => { const s = String(pgn || "").replace(/\[[^\]]*\]/g, " ").replace(/\{[^}]*\}/g, " ").replace(/\d+\.\.\./g, " "); const m = /\b1\.\s*([^\s.]+)\s+([^\s.]+)?/.exec(s); return m ? [m[1], m[2] && !/^(1-0|0-1|1\/2-1\/2|\*)$/.test(m[2]) ? m[2] : ""] : ["", ""]; };
+  async function scFetch(site, user) {
+    if (SC.busy) return; SC.busy = true; SC.err = ""; if (MG.tab === "sc" && curPage === "games") mgRender();
+    try {
+      const st = {};
+      let l;
+      if (site === "cc") {
+        const me = user.toLowerCase(), list = await fetchJson("https://api.chess.com/pub/player/" + encodeURIComponent(me) + "/games/archives");
+        const months = (list.archives || []).slice(-12); l = [];
+        for (const url of months.reverse()) {
+          const data = await fetchJson(url);
+          for (const g of data.games || []) {
+            if ((g.rules && g.rules !== "chess") || !g.pgn) continue;
+            const w = g.white || {}, b = g.black || {}, mine = (w.username || "").toLowerCase() === me ? "w" : (b.username || "").toLowerCase() === me ? "b" : null; if (!mine) continue;
+            l.push({ id: "cc:" + String(g.url || g.uuid || "").split("/").pop(), site: "cc", url: g.url || "", t: (g.end_time || 0) * 1000, w: w.username || "?", b: b.username || "?", we: w.rating || null, be: b.rating || null,
+              r: w.result === "win" ? "1-0" : b.result === "win" ? "0-1" : "1/2-1/2", me: mine, tc: g.time_class || "", op: ccOpening(g.pgn), pgn: g.pgn, xa: g.accuracies ? [g.accuracies.white, g.accuracies.black] : null });
+          }
+          if (l.length >= 1500) break;
+          await new Promise(x => setTimeout(x, 120));
+        }
+      } else {
+        const r = await fetch("https://lichess.org/api/games/user/" + encodeURIComponent(user) + "?max=1000&pgnInJson=true&opening=true&clocks=false&evals=false&literate=false", { headers: { Accept: "application/x-ndjson" } });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        st.since = 0; l = [];
+        const me = user.toLowerCase();
+        for (const ln of (await r.text()).split("\n")) {
+          if (!ln.trim()) continue; let g; try { g = JSON.parse(ln); } catch (e) { continue; }
+          if (g.variant && g.variant !== "standard" && g.variant !== "fromPosition") continue;
+          const P = g.players || {}, nm = p => (p && p.user && p.user.name) || (p && p.aiLevel ? "Stockfish L" + p.aiLevel : "?");
+          const w = nm(P.white), b = nm(P.black), mine = w.toLowerCase() === me ? "w" : b.toLowerCase() === me ? "b" : null; if (!mine || !g.pgn) continue;
+          l.push({ id: "li:" + g.id, site: "li", url: "https://lichess.org/" + g.id, t: g.lastMoveAt || g.createdAt || 0, w, b, we: (P.white && P.white.rating) || null, be: (P.black && P.black.rating) || null,
+            r: g.winner === "white" ? "1-0" : g.winner === "black" ? "0-1" : "1/2-1/2", me: mine, tc: g.speed || "", op: (g.opening && g.opening.name) || "", pgn: g.pgn, xa: null });
+        }
+      }
+      l = l.map(g => Object.assign(g, { id: "sc:" + g.id, sc: true }));
+      const old = (await idbAll("games") || []).filter(g => g.sc).map(g => g.id);
+      if (old.length) await idbDel("games", old);
+      if (l.length) await idbPut("games", l);
+      SC.games = l.sort((a, b) => b.t - a.t); SC.who = { site, user, at: Date.now() }; store.set("zx_scout", SC.who);
+      if (!l.length) SC.err = T("ما لكينا هذا اللاعب.", "Player not found.");
+    } catch (e) { SC.err = /404/.test(e.message) ? T("ما لكينا هذا اللاعب.", "Player not found.") : t10("mg_neterr"); }
+    finally { SC.busy = false; SC.show = 30; if (curPage === "games" && MG.tab === "sc") mgRender(); }
+  }
+  async function scStop() { const ids = (SC.games || []).map(g => g.id); if (ids.length) await idbDel("games", ids); SC.games = []; SC.who = null; store.set("zx_scout", null); zxT("games", "scout_stop", ""); mgRender(); }
+  function scStats(L) {
+    const sc = g => g.r === "1/2-1/2" ? "d" : (g.r === "1-0") === (g.me === "w") ? "w" : "l";
+    const side = c => { const G = L.filter(g => g.me === c), o = { n: G.length, w: 0, d: 0, l: 0, ops: new Map(), fm: new Map() };
+      for (const g of G) { const s = sc(g); o[s]++;
+        const f = scFamily(g.op) || "—", e = o.ops.get(f) || { n: 0, w: 0, d: 0 }; e.n++; if (s === "w") e.w++; if (s === "d") e.d++; o.ops.set(f, e);
+        const [m1, m2] = scFirst(g.pgn), key = c === "w" ? m1 : m1 && m2 ? m1 + "|" + m2 : ""; if (key) o.fm.set(key, (o.fm.get(key) || 0) + 1); }
+      o.top = [...o.ops.entries()].filter(x => x[0] !== "—").sort((a, b) => b[1].n - a[1].n).slice(0, 5); return o; };
+    const last = L[0] ? (L[0].me === "w" ? L[0].we : L[0].be) : null;
+    const xa = L.map(g => g.xa && g.xa[g.me === "w" ? 0 : 1]).filter(x => x != null);
+    return { w: side("w"), b: side("b"), last, acc: xa.length ? xa.reduce((a, b) => a + b, 0) / xa.length : null, accN: xa.length };
+  }
+  function scRender(box, tabs) {
+    const who = SC.who, L = (SC.games || []).filter(g => SC.tc === "all" || (g.tc === "correspondence" ? "daily" : g.tc) === SC.tc);
+    const pct = (a, n) => n ? Math.round(a * 100 / n) : 0;
+    const bar = o => `<div class="scwdl"><i class="w" style="width:${pct(o.w, o.n)}%"></i><i class="d" style="width:${pct(o.d, o.n)}%"></i><i class="l" style="width:${pct(o.l, o.n)}%"></i></div>
+      <div class="scnum"><span>${T("نسبة الفوز", "Win rate")} <b>${pct(o.w, o.n)}%</b></span><span>${T("فوز", "W")} ${o.w} · ${T("تعادل", "D")} ${o.d} · ${T("خسارة", "L")} ${o.l}</span></div>`;
+    let stats = "";
+    if (who && L.length) {
+      const s = scStats(L);
+      const side = (o, c) => {
+        const fm = [...o.fm.entries()].sort((a, b) => b[1] - a[1]);
+        let fmH = "";
+        if (c === "w") fmH = fm.length ? `<div class="scfm">${T("أول نقلة", "First move")}: ${fm.slice(0, 3).map(([m, n]) => `<b>1.${esc(m)}</b> ${pct(n, o.n)}%`).join(" · ")}</div>` : "";
+        else { const rep = first => { const r = fm.filter(([k]) => k.split("|")[0] === first); const tot = r.reduce((a, x) => a + x[1], 0); return r.length ? `<div class="scfm">${T("رده على", "Reply to")} <b>1.${first}</b>: ${r.slice(0, 2).map(([k, n]) => `<b>${esc(k.split("|")[1])}</b> ${pct(n, tot)}%`).join(" · ")}</div>` : ""; }; fmH = rep("e4") + rep("d4"); }
+        return `<div class="scbox"><h4>${c === "w" ? "♔ " + T("بالأبيض", "As White") : "♚ " + T("بالأسود", "As Black")} <small style="color:var(--muted);font-weight:500">(${o.n} ${T("مباراة", "games")})</small></h4>${bar(o)}${fmH}
+          <div style="margin-top:8px;font-size:12px;color:var(--muted)">${T("أكثر الافتتاحات", "Top openings")}</div>
+          ${o.top.map(([f, e]) => `<div class="scop"><span dir="ltr" title="${esc(f)}">${esc(f)}</span><em>${e.n}</em><b style="color:${pct(e.w, e.n) >= 50 ? "#8ee0a6" : "#ff9a8f"}">${pct(e.w, e.n)}%</b></div>`).join("") || '<div class="scfm">—</div>'}</div>`;
+      };
+      stats = `<div class="card"><h3>📊 ${esc(who.user)} <small style="color:var(--muted);font-weight:500">${who.site === "cc" ? "Chess.com · " + T("آخر 12 شهر", "last 12 months") : "Lichess"}</small></h3>
+        <div class="mgsum"><b>${L.length} ${T("مباراة", "games")}</b>${s.last ? `<b>${T("آخر تصنيف", "Latest rating")} ${s.last}</b>` : ""}${s.acc != null ? `<b>${T("الدقة عند Chess.com", "Chess.com accuracy")} ${s.acc.toFixed(1)}%</b>` : ""}</div>
+        <div class="scg">${side(s.w, "w")}${side(s.b, "b")}</div></div>`;
+    }
+    const chip = (v, label) => `<button data-sctc="${v}" class="${SC.tc === v ? "on" : ""}">${label}</button>`;
+    const rows = L.slice(0, SC.show).map(g => {
+      const sc = g.r === "1/2-1/2" ? "D" : (g.r === "1-0") === (g.me === "w") ? "W" : "L", opp = g.me === "w" ? g.b : g.w, oe = g.me === "w" ? g.be : g.we;
+      const ds = new Date(g.t).toLocaleDateString(window.ZX_LANG === "ar" ? "ar-IQ" : undefined, { year: "numeric", month: "short", day: "numeric" });
+      return `<div class="mgr"><div class="res ${sc}">${sc === "W" ? T("ف", "W") : sc === "L" ? T("خ", "L") : "½"}</div>
+        <div style="min-width:0"><div class="op"><span class="pchip2 ${g.me === "w" ? "b" : "w"}"></span><span dir="auto">${esc(opp)}</span> <small>${oe ? "(" + oe + ")" : ""}</small></div>
+        <div class="meta">${esc(g.tc || "")} · ${ds}${g.op ? " · " + esc(g.op) : ""}</div></div>
+        <div class="go"><button class="primary" data-mga="${esc(g.id)}">🔍 ${t10("mg_analyse")}</button>${g.url ? `<button data-mgu="${esc(g.url)}">↗</button>` : ""}</div></div>`;
+    }).join("");
+    box.innerHTML = tabs.replace('lbtab on" data-mgtab="me"', 'lbtab" data-mgtab="me"').replace('lbtab" data-mgtab="sc"', 'lbtab on" data-mgtab="sc"') + `<div class="card"><h3>🔭 ${T("مراقبة لاعب", "Scout a player")}</h3>
+        <p class="note" style="margin:0 0 10px">${T("تابع أسلوب أي لاعب: خصمك القادم أو لاعب تحبه. مبارياته تبقى منفصلة عن مبارياتك.", "Study any player's style: your next opponent or a player you like. Their games stay separate from yours.")}</p>
+        <div class="mgin"><select id="scSite" style="flex:none;width:auto;min-width:0"><option value="cc"${!who || who.site === "cc" ? " selected" : ""}>Chess.com</option><option value="li"${who && who.site === "li" ? " selected" : ""}>Lichess</option></select>
+          <input id="scUser" placeholder="${T("اسم المستخدم", "username")}" value="${esc(who ? who.user : "")}" autocapitalize="off" spellcheck="false" style="direction:ltr"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="primary" id="scGo" ${SC.busy ? "disabled" : ""}>🔭 ${T("راقب", "Scout")}</button>${who ? `<button id="scRef" ${SC.busy ? "disabled" : ""}>🔄 ${t10("mg_now")}</button><button id="scStop">✖ ${T("إيقاف المراقبة", "Stop scouting")}</button>` : ""}</div>
+        <div class="mgst">${SC.busy ? "⏳ " + T("جاري جلب المباريات…", "Fetching games…") : SC.err ? "✖ " + esc(SC.err) : ""}</div></div>
+      ${stats}
+      ${who && (SC.games || []).length ? `<div class="card"><h3>🗂️ ${T("مبارياته", "Their games")}</h3>
+        <div class="mgf">${chip("all", t10("mg_all"))}${chip("bullet", "Bullet")}${chip("blitz", "Blitz")}${chip("rapid", "Rapid")}${chip("classical", "Classical")}${chip("daily", "Daily")}</div>
+        <div class="mgl">${rows || `<p class="note">${t10("mg_empty")}</p>`}</div>
+        ${L.length > SC.show ? `<button id="scMore" style="width:100%;margin-top:10px">${t10("mg_more")} (${L.length - SC.show})</button>` : ""}</div>` : ""}`;
+    box.querySelectorAll("[data-mgtab]").forEach(b => b.onclick = () => { MG.tab = b.dataset.mgtab; mgRender(); });
+    const go = () => { const u = $("scUser").value.trim(); if (!/^[A-Za-z0-9_-]{2,30}$/.test(u)) { $("scUser").focus(); return; } zxT("games", "scout", $("scSite").value); scFetch($("scSite").value, u); };
+    $("scGo").onclick = go; $("scUser").onkeydown = e => { if (e.key === "Enter") go(); };
+    const rf = $("scRef"); if (rf) rf.onclick = () => scFetch(who.site, who.user);
+    const sp = $("scStop"); if (sp) sp.onclick = scStop;
+    box.querySelectorAll("[data-sctc]").forEach(b => b.onclick = () => { SC.tc = b.dataset.sctc; SC.show = 30; mgRender(); });
+    const mo = $("scMore"); if (mo) mo.onclick = () => { SC.show += 50; mgRender(); };
+    box.querySelectorAll("[data-mga]").forEach(b => b.onclick = () => mgAnalyse(b.dataset.mga));
+    box.querySelectorAll("[data-mgu]").forEach(b => b.onclick = () => { try { window.open(b.dataset.mgu, "_blank"); } catch (e) { } });
+  }
+
   // ----- My games: Chess.com / Lichess, synced every 10 minutes while the app is open
   const MG = { games: null, loading: null, syncing: false, filt: { site: "all", res: "all", tc: "all", q: "" }, show: 40, cur: null, curMoves: "", msg: "" };
   const mgAccounts = () => { const a = (prog.acc && typeof prog.acc === "object") ? prog.acc : {}; return { cc: a.cc || store.get("zx_da_cc", "") || "", li: a.li || store.get("zx_da_li", "") || "" }; };
@@ -15583,7 +15704,20 @@ const APP_BUILD = 28;
     prog.acc = { cc, li }; store.set("zx_da_cc", cc); store.set("zx_da_li", li); saveProg();
   }
   const mgState = () => store.get("zx_mg_state", {}) || {};
-  async function mgLoad() { if (MG.games) return MG.games; if (!MG.loading) MG.loading = idbAll("games").then(l => { MG.games = (l || []).sort((a, b) => b.t - a.t); return MG.games; }); return MG.loading; }
+  const mgOwn = g => g.site + ":" + String(g.me === "w" ? g.w : g.b).toLowerCase();
+  const mgMine = () => { const A = mgAccounts(), s = new Set(); if (A.cc) s.add("cc:" + A.cc.toLowerCase()); if (A.li) s.add("li:" + A.li.toLowerCase()); return s; };
+  async function mgLoad() { if (MG.games) return MG.games; if (!MG.loading) MG.loading = idbAll("games").then(l => {
+    const mine = mgMine(); l = l || [];
+    SC.games = l.filter(g => g.sc).sort((a, b) => b.t - a.t);
+    MG.games = l.filter(g => !g.sc && mine.has(mgOwn(g))).sort((a, b) => b.t - a.t); return MG.games; }); return MG.loading; }
+  // forget one account's games (unlink or a different user name)
+  async function mgDrop(site, user) {
+    const own = site + ":" + String(user || "").toLowerCase(), all = await idbAll("games");
+    const ids = (all || []).filter(g => !g.sc && g.site === site && (!user || mgOwn(g) === own)).map(g => g.id);
+    if (ids.length) await idbDel("games", ids);
+    if (MG.games) MG.games = MG.games.filter(g => !(g.site === site && (!user || mgOwn(g) === own)));
+    const S = mgState(); delete S[site]; store.set("zx_mg_state", S);
+  }
   const ccOpening = pgn => { const m = /\[ECOUrl "[^"]*\/openings\/([^"]+)"\]/.exec(pgn || ""); if (!m) return ""; try { return decodeURIComponent(m[1]).replace(/-/g, " ").replace(/\s+\d+\.\.\..*$|\s+\d+\..*$/, "").slice(0, 60); } catch (e) { return ""; } };
   async function mgSyncChessCom(user, st) {
     const me = user.toLowerCase(), out = [];
@@ -15634,9 +15768,10 @@ const APP_BUILD = 28;
       if (A.li) try { const st = S.li && S.li.user === A.li.toLowerCase() ? S.li : {}; const l = await mgSyncLichess(A.li, st); S.li = Object.assign(st, { at: Date.now(), err: "" }); fresh = fresh.concat(l); }
         catch (e) { S.li = Object.assign(S.li || {}, { err: /404/.test(e.message) ? t10("mg_nouser") : t10("mg_neterr") }); }
       const add = fresh.filter(g => !have.has(g.id)), upd = fresh.filter(g => have.has(g.id));
-      if (fresh.length) await idbPut("games", fresh);
+      const mineNow = mgMine(); fresh = fresh.filter(g => mineNow.has(mgOwn(g)));
       const byId = new Map(MG.games.map(g => [g.id, g])); for (const g of fresh) byId.set(g.id, g);
-      MG.games = [...byId.values()].sort((a, b) => b.t - a.t);
+      if (fresh.length) await idbPut("games", fresh);
+      MG.games = [...byId.values()].filter(g => mineNow.has(mgOwn(g))).sort((a, b) => b.t - a.t);
       if (add.length && !manual && have.size) toast("🗂️ " + add.length + " " + t10("mg_new"), () => showTab("games"));
       MG.msg = add.length ? "+" + add.length : "";
       void upd;
@@ -15679,9 +15814,11 @@ const APP_BUILD = 28;
         <div class="meta">${g.site === "cc" ? "♟ Chess.com" : "🐴 Lichess"} · ${tcName[g.tc] || esc(g.tc || "")} · ${ds}${myE ? " · " + t10("mg_myrating") + " " + myE : ""}${g.op ? " · " + esc(g.op) : ""}</div>${accHtml}</div>
         <div class="go"><button class="primary" data-mga="${esc(g.id)}">${a ? "📊 " + t10("mg_view") : "🔍 " + t10("mg_analyse")}</button>${g.url ? `<button data-mgu="${esc(g.url)}">↗</button>` : ""}</div></div>`;
     }).join("");
-    box.innerHTML = ntAskHtml(A) + `<div class="card"><h3>🔗 ${t10("mg_link_h")}</h3><p class="note" style="margin:0 0 10px">${t10("mg_link_p")}</p>
-        <div class="mgacc"><div><label>Chess.com</label><input id="mgCc" placeholder="${T("اسم المستخدم", "username")}" value="${esc(A.cc)}" autocapitalize="off" spellcheck="false"></div>
-        <div><label>Lichess</label><input id="mgLi" placeholder="${T("اسم المستخدم", "username")}" value="${esc(A.li)}" autocapitalize="off" spellcheck="false"></div></div>
+    const tabs = `<div class="lbtabs mgtabs"><button class="lbtab on" data-mgtab="me"><i>🗂️</i>${T("مبارياتي", "My games")}</button><button class="lbtab" data-mgtab="sc"><i>🔭</i>${T("مراقبة لاعب", "Scout a player")}</button></div>`;
+    if (MG.tab === "sc") { scRender(box, tabs); return; }
+    box.innerHTML = tabs + ntAskHtml(A) + `<div class="card"><h3>🔗 ${t10("mg_link_h")}</h3><p class="note" style="margin:0 0 10px">${t10("mg_link_p")}</p>
+        <div class="mgacc"><div><label>Chess.com</label><div class="mgin"><input id="mgCc" placeholder="${T("اسم المستخدم", "username")}" value="${esc(A.cc)}" autocapitalize="off" spellcheck="false">${A.cc ? `<button class="sm" data-mgun="cc">✖ ${T("فصل", "Unlink")}</button>` : ""}</div></div>
+        <div><label>Lichess</label><div class="mgin"><input id="mgLi" placeholder="${T("اسم المستخدم", "username")}" value="${esc(A.li)}" autocapitalize="off" spellcheck="false">${A.li ? `<button class="sm" data-mgun="li">✖ ${T("فصل", "Unlink")}</button>` : ""}</div></div></div>
         <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="primary" id="mgSave">${A.cc || A.li ? "💾 " + t10("mg_save") : "🔗 " + t10("mg_link")}</button>${A.cc || A.li ? `<button id="mgNow" ${MG.syncing ? "disabled" : ""}>🔄 ${t10("mg_now")}</button>` : ""}</div>
         <div class="mgst" id="mgStatus">${mgStatusHtml()}</div></div>
       <div class="card"><h3>🗂️ ${t10("mg_h")} <small style="color:var(--muted);font-weight:500">(${(MG.games || []).length})</small></h3>
@@ -15692,9 +15829,20 @@ const APP_BUILD = 28;
         <div class="mgsum"><b>${list.length} ${t10("mg_games")}</b><b style="color:#8ee0a6">${W} ${t10("mg_w")}</b><b style="color:#ff9a8f">${L} ${t10("mg_l")}</b><b>${D} ${t10("mg_d")}</b></div>
         <div class="mgl">${rows || `<p class="note">${A.cc || A.li ? (MG.syncing ? "⏳ " + t10("mg_syncing") : t10("mg_empty")) : t10("mg_nolink")}</p>`}</div>
         ${list.length > MG.show ? `<button id="mgMore" style="width:100%;margin-top:10px">${t10("mg_more")} (${list.length - MG.show})</button>` : ""}</div>`;
-    $("mgSave").onclick = () => { const cc = $("mgCc").value.trim(), li = $("mgLi").value.trim(); const A0 = mgAccounts(); mgSetAccounts(cc, li); zxT("games", "link", (cc ? "cc " : "") + (li ? "li" : ""));
-      if (cc.toLowerCase() !== (A0.cc || "").toLowerCase() || li.toLowerCase() !== (A0.li || "").toLowerCase()) { const S = mgState(); if (cc.toLowerCase() !== (A0.cc || "").toLowerCase()) delete S.cc; if (li.toLowerCase() !== (A0.li || "").toLowerCase()) delete S.li; store.set("zx_mg_state", S); }
+    $("mgSave").onclick = async () => { const cc = $("mgCc").value.trim(), li = $("mgLi").value.trim(); const A0 = mgAccounts(); zxT("games", "link", (cc ? "cc " : "") + (li ? "li" : ""));
+      // a different user name: the old account's games go, the new one's come in
+      if (A0.cc && cc.toLowerCase() !== A0.cc.toLowerCase()) await mgDrop("cc", A0.cc);
+      if (A0.li && li.toLowerCase() !== A0.li.toLowerCase()) await mgDrop("li", A0.li);
+      mgSetAccounts(cc, li);
       ntApply(); mgRender(); mgSync(true); };
+    box.querySelectorAll("[data-mgun]").forEach(b => b.onclick = async () => {
+      const k = b.dataset.mgun, A0 = mgAccounts();
+      if (!confirm(T("فصل الحساب يمسح مبارياته من التطبيق. متأكد؟", "Unlinking removes this account's games from the app. Sure?"))) return;
+      zxT("games", "unlink", k);
+      await mgDrop(k, A0[k]);
+      mgSetAccounts(k === "cc" ? "" : A0.cc, k === "li" ? "" : A0.li);
+      ntApply(); mgRender(); });
+    box.querySelectorAll("[data-mgtab]").forEach(b => b.onclick = () => { MG.tab = b.dataset.mgtab; zxT("games", "tab", MG.tab); mgRender(); });
     const nta = $("mgNt"); if (nta) nta.onclick = () => ntAsk();
     const now = $("mgNow"); if (now) now.onclick = () => mgSync(true);
     box.querySelectorAll("[data-mgf]").forEach(b => b.onclick = () => { const [g, v] = b.dataset.mgf.split(":"); MG.filt[g] = v; MG.show = 40; mgRender(); });
@@ -15704,8 +15852,8 @@ const APP_BUILD = 28;
     box.querySelectorAll("[data-mgu]").forEach(b => b.onclick = () => { try { window.open(b.dataset.mgu, "_blank"); } catch (e) { } });
   }
   function mgAnalyse(id) {
-    const g = (MG.games || []).find(x => x.id === id); if (!g) return;
-    zxT("games", "analyse", g.site);
+    const g = (MG.games || []).find(x => x.id === id) || (SC.games || []).find(x => x.id === id); if (!g) return;
+    zxT("games", g.sc ? "scout_analyse" : "analyse", g.site);
     showTab("analysis");
     const err = loadPgnText(g.pgn);
     if (err) { setMsg("importMsg", "bad", err); return; }
