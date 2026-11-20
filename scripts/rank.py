@@ -4,7 +4,7 @@ Writes small JSON files to rank/ that the app reads from GitHub Pages.
   python3 scripts/rank.py fide            # monthly FIDE list
   python3 scripts/rank.py cc  [seconds]   # Chess.com, incremental, time budget
 """
-import sys, os, json, time, gzip, io, zipfile, threading, urllib.request, urllib.error
+import sys, os, zlib, json, time, gzip, io, zipfile, threading, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 
 ARAB = ["IQ", "SA", "EG", "AE", "KW", "QA", "BH", "OM", "YE", "JO", "SY", "LB", "PS",
@@ -130,8 +130,9 @@ def cc(budget):
     for c in ARAB:
         for u in cache["lists"].get(c, {}).get("u", []):
             e = users.get(u)
-            want.append((e[0] if e else 0, u, c))
+            want.append((e[0] if e else 0, zlib.crc32(u.encode()), u, c))
     want.sort()
+    want = [(a, u, c) for a, _, u, c in want]   # unseen first, in a mixed order across countries
     lock = threading.Lock()
     done = [0]
 
@@ -155,7 +156,7 @@ def cc(budget):
             users[u] = rec
             done[0] += 1
 
-    with ThreadPoolExecutor(6) as ex:
+    with ThreadPoolExecutor(12) as ex:
         list(ex.map(one, want))
     print("stats fetched", done[0], "cached", len(users), "in", int(time.time() - t0), "s")
     # 3. rankings
