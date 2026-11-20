@@ -40,7 +40,8 @@ def get(url, tries=6):
 
 # ---------------------------------------------------------------- FIDE
 def fide():
-    raw = get("https://ratings.fide.com/download/players_list.zip", tries=4)
+    src = sys.argv[2] if len(sys.argv) > 2 else ""
+    raw = open(src, "rb").read() if src and os.path.exists(src) else get("https://ratings.fide.com/download/players_list.zip", tries=4)
     if not raw:
         sys.exit("no FIDE list")
     z = zipfile.ZipFile(io.BytesIO(raw))

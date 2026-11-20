@@ -20,7 +20,11 @@ jobs:
         with: { path: rank_cache.json.gz, key: "rank-${{ github.run_id }}", restore-keys: "rank-" }
       - name: FIDE
         if: github.event.schedule == '41 3 3 * *' || inputs.what == 'fide' || inputs.what == 'both'
-        run: python3 scripts/rank.py fide
+        continue-on-error: true
+        run: |
+          curl -fL --retry 5 --retry-delay 20 --max-time 900 -A "Mozilla/5.0 (ZIGRAX rankings)" -o players_list.zip https://ratings.fide.com/download/players_list.zip
+          ls -la players_list.zip
+          python3 scripts/rank.py fide players_list.zip
       - name: Chess.com
         if: github.event.schedule == '17 1 * * *' || inputs.what == 'cc' || inputs.what == 'both'
         run: python3 scripts/rank.py cc ${{ inputs.budget || '17000' }}
