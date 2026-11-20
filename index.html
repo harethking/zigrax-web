@@ -8462,31 +8462,34 @@ const APP_BUILD = 27;
 
   let lastAcc = { w: null, b: null };
 
-  // Did move i sacrifice material? (piece left en prise for less than its worth)
+  // Did move i sacrifice material? After the move, can the opponent win one of the mover's pieces
+  // (the moved one or one left behind) for at least 2 points net? Like Chess.com, it counts whether
+  // or not the opponent actually takes it: a sound sacrifice is offered, not necessarily accepted.
   function isSacrifice(i) {
     hz.setFen(anaStart);
     for (let k = 0; k < i; k++) hz.move(anaMoves[k]);
     const u = anaMoves[i], bd = parseBoard(hz.fen());
-    const from = sqIndex(u.slice(0, 2)), to = sqIndex(u.slice(2, 4));
-    const mover = bd[from].toLowerCase();
-    if (mover === "p" || mover === "k" || u.length === 5) return false;
+    const to = sqIndex(u.slice(2, 4));
+    if (u.length === 5) return false;
     const captured = bd[to] ? PVAL[bd[to].toLowerCase()] : 0;
+    const moverWhite = bd[sqIndex(u.slice(0, 2))] === bd[sqIndex(u.slice(0, 2))].toUpperCase();
     if (!hz.move(u)) return false;
     const bd2 = parseBoard(hz.fen());
+    const mine = c => c && (c === c.toUpperCase()) === moverWhite;
     let worst = 0;
     for (const r of hz.legal()) {
-      if (r.slice(2, 4) !== u.slice(2, 4)) continue;
+      const s = r.slice(2, 4), victim = bd2[sqIndex(s)];
+      if (!mine(victim)) continue;
+      const v = PVAL[victim.toLowerCase()];
+      if (v < 3 || v > 9) continue;
       const attacker = PVAL[bd2[sqIndex(r.slice(0, 2))].toLowerCase()];
       hz.move(r);
-      const defended = hz.legal().some(x => x.slice(2, 4) === u.slice(2, 4));
+      const defended = hz.legal().some(x => x.slice(2, 4) === s);
       hz.undo();
-      const loss = PVAL[mover] - (defended ? attacker : 0) - captured;
+      const loss = v - (defended ? attacker : 0);
       if (loss > worst) worst = loss;
     }
-    if (worst < 2) return false;
-    // Only a real sacrifice if the engine's best reply actually takes the piece.
-    const reply = ana[i + 1] && ana[i + 1].best;
-    return !!reply && reply.slice(2, 4) === u.slice(2, 4);
+    return worst - captured >= 2;
   }
 
   // Classification of move i (from analysed position i). Cached.
@@ -8521,7 +8524,7 @@ const APP_BUILD = 27;
     }
 
     // Brilliant: a sound sacrifice that is the best (or near best) move.
-    if ((cls === "best" || cls === "excellent") && wa >= 45 && wb < 97 && isSacrifice(i)) cls = "brilliant";
+    if ((cls === "best" || (cls === "excellent" && drop < 1)) && wa >= 50 && (wb < 95 || (b.score && b.score.mate !== undefined && after > 0)) && isSacrifice(i)) cls = "brilliant";
     // Great: the only good move in a non-trivial position.
     else if (cls === "best" && a.second !== undefined && a.second !== null && wb > 15 && wb < 95) {
       const ws2 = winPct(cpEq(a.second));
