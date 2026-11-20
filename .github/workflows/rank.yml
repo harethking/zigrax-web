@@ -22,9 +22,9 @@ jobs:
         if: github.event.schedule == '41 3 3 * *' || inputs.what == 'fide' || inputs.what == 'both'
         continue-on-error: true
         run: |
-          for u in https://ratings.fide.com/download/players_list.zip http://ratings.fide.com/download/players_list.zip; do
-            curl -fL --retry 2 --retry-delay 10 --connect-timeout 40 --max-time 900 -A "Mozilla/5.0 (ZIGRAX rankings)" -o players_list.zip "$u" && break
-          done
+          # FIDE does not answer GitHub's servers, so the list comes through ZIGRAX's Supabase function
+          curl -s -H "x-zx: rankings" "https://kfiyrxabfycnftgnipqd.supabase.co/functions/v1/zx-fide?probe=1"; echo
+          curl -fL --retry 3 --retry-delay 20 --max-time 900 -H "x-zx: rankings" -o players_list.zip "https://kfiyrxabfycnftgnipqd.supabase.co/functions/v1/zx-fide"
           ls -la players_list.zip
           python3 scripts/rank.py fide players_list.zip
       - name: Chess.com
