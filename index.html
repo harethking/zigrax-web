@@ -9308,7 +9308,7 @@ const APP_BUILD = 35;
     render();
     renderSummary();
     zxAnaSave(stopped);
-    if (!stopped && typeof btCollectFromAnalysis === "function") btCollectFromAnalysis();
+    if (!stopped && typeof blCollectFromAnalysis === "function") blCollectFromAnalysis();
   }
 
   // Positions around moves judged bad get a second, deeper look to filter out
@@ -11278,7 +11278,7 @@ const APP_BUILD = 35;
   }
   function pzSolved() {
     const c = PZ.cur;
-    if (PZ.mode && PZ.mode.t === "blunder") { btOnSolved(c); return; }
+    if (PZ.mode && PZ.mode.t === "blunder") { blOnSolved(c); return; }
     zxT("puzzles", "solved", "#" + (c.i + 1) + (c.mistakes ? " · " + c.mistakes + T(" خطأ", " mistakes") : "") + (c.hints ? " · " + c.hints + T(" تلميح", " hints") : ""));
     c.done = true;
     const errs = c.mistakes + c.hints;
@@ -13977,7 +13977,7 @@ const APP_BUILD = 35;
         : `${T("لغز جديد كل يوم — حلّه لتحافظ على سلسلتك", "A new puzzle every day — solve it to keep your streak")}`}<br><small>${T("أفضل سلسلة", "Best streak")}: ${D.best || 0} · ${T("المجموع", "Total")}: ${D.n || 0}</small></div></div>
       <button class="${done ? "" : "primary"}" id="pzDailyGo" style="width:100%;margin-top:8px">${done ? T("↺ أعد لغز اليوم", "↺ Replay today's puzzle") : T("🧩 حلّ لغز اليوم", "🧩 Solve today's puzzle")}</button>`;
     $("pzDailyGo").onclick = () => pzStart(i, { t: "daily" });
-    if (typeof btRender === "function") btRender();
+    if (typeof blRender === "function") blRender();
   }
   function pzChTab() { const t = store.get("zx_pz_ch", "m"); return PZ_CH_TIERS.some(x => x[0] === t) ? t : "m"; }
   function pzRenderCh() {
@@ -17474,16 +17474,16 @@ const APP_BUILD = 35;
   // ======================================================================
   // ZIGRAX PRO UPGRADES: Blunder Trainer, Shareable Match Card, Live Chess.com Search
   // ======================================================================
-  function btList() { const l = store.get("zx_bt", []); return Array.isArray(l) ? l : []; }
-  function btSave(l) { store.set("zx_bt", l.slice(0, 40)); }
-  function btCollectFromAnalysis() {
+  function blList() { const l = store.get("zx_bt", []); return Array.isArray(l) ? l : []; }
+  function blSave(l) { store.set("zx_bt", l.slice(0, 40)); }
+  function blCollectFromAnalysis() {
     if (!anaMoves || !anaMoves.length || !ana || !ana.length) return;
     const h = (loadedGame && loadedGame.headers) || headers || {};
     const me = (($("userInput") && $("userInput").value) || (mgAccounts && mgAccounts().cc) || (session && session.username) || "").trim().toLowerCase();
     const mySide = me ? (String(h.White || "").toLowerCase() === me ? 0 : String(h.Black || "").toLowerCase() === me ? 1 : -1) : -1;
     const z = zxCreate(wasmBytes());
     z.setFen(anaStart || START);
-    const list = btList();
+    const list = blList();
     let added = 0;
     for (let i = 0; i < anaMoves.length; i++) {
       const fen = z.fen();
@@ -17498,20 +17498,20 @@ const APP_BUILD = 35;
       }
       if (!z.move(anaMoves[i])) break;
     }
-    if (added) { btSave(list); btRender(); }
+    if (added) { blSave(list); blRender(); }
   }
-  function btRender() {
+  function blRender() {
     const box = $("pzBlunders"); if (!box) return;
-    const list = btList();
+    const list = blList();
     box.innerHTML = `<h3>🎯 ${T("مدرّب أخطائي", "My Blunders Trainer")} <span class="tier">${list.length}</span></h3>
       <div class="note">${list.length ? T(`لديك ${list.length} خطأ فادح محفوظ من مبارياتك — تدرّب عليها حتى لا تكررها!`, `You have ${list.length} saved blunders from your games — practice them!`)
         : T("حلّل أي مباراة وسيحفظ التطبيق أخطاءك الفادحة هنا تلقائياً لتتدرّب عليها.", "Analyse any game and your blunders will be saved here automatically.")}</div>
       ${list.length ? `<button class="primary" id="btGo" style="width:100%;margin-top:8px">🎯 ${T("تدرّب على أخطائي الآن", "Train My Blunders")}</button>` : ""}`;
-    if ($("btGo")) $("btGo").onclick = () => btStart(0);
+    if ($("btGo")) $("btGo").onclick = () => blStart(0);
   }
-  function btStart(idx) {
-    const list = btList();
-    if (!list.length) { toast(T("أحسنت! أصلحت كل أخطاءك المحفوظة 🎉", "Great job! All blunders cleared 🎉")); btRender(); return; }
+  function blStart(idx) {
+    const list = blList();
+    if (!list.length) { toast(T("أحسنت! أصلحت كل أخطاءك المحفوظة 🎉", "Great job! All blunders cleared 🎉")); blRender(); return; }
     const item = list[idx % list.length];
     pzClear(); PZ.accept = null; PZ.mode = { t: "blunder", idx: idx % list.length, fen: item.fen };
     PZ.z.setFen(item.fen);
@@ -17522,20 +17522,20 @@ const APP_BUILD = 35;
     pzDraw({});
     $("pzInfo").innerHTML = `<b>🎯 ${T("مدرّب أخطائي", "My Blunders")}</b> · ${T("المتبقي", "Left")}: ${list.length}`;
     pzControls([["💡 " + T("تلميح", "Hint"), () => { if (PZ.cur && !PZ.cur.done) { PZ.cur.hints++; const m = PZ.cur.mv[0]; PZ.b.arrows([[sqIndex(m.slice(0,2)), sqIndex(m.slice(2,4)), "good"]]); } }],
-      ["التالي ←", () => btStart((idx + 1) % list.length)]]);
+      ["التالي ←", () => blStart((idx + 1) % list.length)]]);
     pzStatus(`🎯 ${T("دورك", "Your turn")}: <b>${pzSolverName(solver)}</b> — ${T("جد النقلة الصحيحة بدلاً من الخطأ الفادح!", "Find the right move instead of the blunder!")}`);
     PZ.accept = pzMove;
   }
-  function btOnSolved(c) {
+  function blOnSolved(c) {
     c.done = true;
     beep("win");
     confetti();
-    const list = btList().filter(x => x.fen !== (PZ.mode && PZ.mode.fen));
-    btSave(list);
+    const list = blList().filter(x => x.fen !== (PZ.mode && PZ.mode.fen));
+    blSave(list);
     addXp(15, $("pzBoard"));
     pzStatus(`🏆 ${T("أحسنت! أصلحت هذا الخطأ (+15 XP)", "Great! Blunder fixed (+15 XP)")}`, "good");
-    btRender();
-    pzLater(() => { if (list.length) btStart(0); }, 1400);
+    blRender();
+    pzLater(() => { if (list.length) blStart(0); }, 1400);
   }
 
   function rvShareCard() {
