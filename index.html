@@ -26,6 +26,13 @@ html[dir=rtl] .chip{padding:4px 4px 4px 12px}
 .dnav{display:flex;flex-direction:column;gap:3px}
 .dnav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:12px;background:transparent;font-size:15px;text-align:start;color:var(--text)}
 .dnav button i{font-style:normal;width:24px;text-align:center;font-size:17px}
+.dgrp{padding:12px 12px 4px;font-size:11.5px;font-weight:800;letter-spacing:.4px;color:var(--muted);opacity:.85}
+.dnav button.ftoff{opacity:.6}.dnav button.ftoff>span{display:flex;flex-direction:column;min-width:0}
+.dnav button .ftwhy{display:block;font-size:11px;color:#f08a7e;font-weight:500;white-space:normal;line-height:1.35}
+#ftBar{display:none;gap:8px;align-items:flex-start;margin:0;padding:8px 14px;background:rgba(200,70,55,.16);border-bottom:1px solid rgba(220,90,70,.35);color:#ffd2cb;font-size:13px;line-height:1.5}
+#ftBar.show{display:flex}#ftBar b{color:#fff}#ftBar button{margin-inline-start:auto;padding:2px 9px;flex:none}
+.ftrow{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.ftrow input[type=text]{grid-column:1 / -1;width:100%}.ftrow .ftst{font-size:12px}.ftrow .ftbtns{grid-column:1 / -1;display:flex;gap:6px}
 .dnav button:hover{background:var(--panel2)}
 .dnav button.on{background:linear-gradient(90deg,rgba(224,163,58,.22),rgba(224,163,58,.08));color:var(--accent2);font-weight:700}
 .dnav .soonTag,.dnav .nbadge{margin-inline-start:auto}
@@ -1089,21 +1096,24 @@ body.pset-ext #optPieces{opacity:.45;pointer-events:none}
     <span class="dpinfo"><b id="dmName"></b><small id="dmSub"></small></span>
   </button>
   <nav class="dnav" id="dnav">
+    <div class="dgrp">التحليل والمراجعة</div>
     <button id="tabAnalysis" class="on" data-page="analysis"><i>📊</i><span>التحليل</span></button>
     <button id="tabCoach" data-page="coach"><i>🎓</i><span>التحليل مع مدرب</span><em class="nbadge">جديد</em></button>
-    <button id="tabGames" data-page="games"><i>🗂️</i><span>مبارياتي</span></button>
     <button id="tabDeep" data-page="deep"><i>🧠</i><span>التحليل المعمق</span></button>
-    <button id="tabBot" data-page="bot"><i>🤖</i><span>العب ضد زيكراكس</span></button>
-    <button id="tabFriends" data-page="friends"><i>👥</i><span>الأصدقاء</span><em class="nbadge" id="frBadge" hidden></em></button>
-    <button id="tabTours" data-page="tournaments"><i>🏆</i><span>البطولات</span></button>
-    <button id="tabLeaders" data-page="leaders"><i>🏅</i><span>المتصدرون</span></button>
-    <button id="tabRank" data-page="rank"><i>🌍</i><span>التصنيفات</span></button>
+    <button id="tabGames" data-page="games"><i>🗂️</i><span>مبارياتي</span></button>
+    <div class="dgrp">التدريب</div>
     <button id="tabOpenings" data-page="openings"><i>📖</i><span>الافتتاحيات</span></button>
     <button id="tabPuzzles" data-page="puzzles"><i>🧩</i><span>الألغاز</span></button>
     <button id="tabEndgames" data-page="endgames"><i>♚</i><span>النهايات</span></button>
     <button id="tabCourses" data-page="courses"><i>📚</i><span>كورسات</span></button>
     <button id="tabHistory" data-page="history"><i>📜</i><span>تاريخ الشطرنج</span><em class="nbadge" id="hsNew" hidden>جديد</em></button>
-    <div class="dsep"></div>
+    <div class="dgrp">اللعب والمجتمع</div>
+    <button id="tabBot" data-page="bot"><i>🤖</i><span>العب ضد زيكراكس</span></button>
+    <button id="tabFriends" data-page="friends"><i>👥</i><span>الأصدقاء</span><em class="nbadge" id="frBadge" hidden></em></button>
+    <button id="tabTours" data-page="tournaments"><i>🏆</i><span>البطولات</span></button>
+    <button id="tabLeaders" data-page="leaders"><i>🏅</i><span>المتصدرون</span></button>
+    <button id="tabRank" data-page="rank"><i>🌍</i><span>التصنيفات</span></button>
+    <div class="dgrp">حسابي</div>
     <button id="tabProfile" data-page="profile"><i>👤</i><span>الملف الشخصي</span></button>
     <button id="tabSettings" data-page="settings"><i>⚙️</i><span>الإعدادات</span></button>
     <button id="tabSupport" data-page="support"><i>🎧</i><span>الدعم</span></button>
@@ -1607,7 +1617,7 @@ body.pset-ext #optPieces{opacity:.45;pointer-events:none}
 <main id="admApp" class="page" hidden>
   <section class="pagecol">
     <div class="card">
-      <div class="admtabs" id="admTabs"><button data-at="ov" class="on">📊 نظرة عامة</button><button data-at="live">🟢 مباشر</button><button data-at="act">👣 النشاط</button><button data-at="guests">🕶 الزوار</button><button data-at="rep">🚩 البلاغات <i class="nbadge" id="admRepN" hidden></i></button><button data-at="users">👥 المستخدمون</button><button data-at="words">🚫 الكلمات</button><button data-at="cheat">🛡 كشف الغش</button><button data-at="sec">🔐 الأمان</button><button data-at="ads">📢 الإعلانات</button><button data-at="sup">🎧 الدعم</button><button data-at="push">📣 إشعار للكل</button><button data-at="force">⬆️ التحديث</button><button data-at="deleted">🗑 المحذوفة</button><button data-at="log">📜 السجل</button></div>
+      <div class="admtabs" id="admTabs"><button data-at="ov" class="on">📊 نظرة عامة</button><button data-at="live">🟢 مباشر</button><button data-at="act">👣 النشاط</button><button data-at="guests">🕶 الزوار</button><button data-at="rep">🚩 البلاغات <i class="nbadge" id="admRepN" hidden></i></button><button data-at="users">👥 المستخدمون</button><button data-at="words">🚫 الكلمات</button><button data-at="cheat">🛡 كشف الغش</button><button data-at="sec">🔐 الأمان</button><button data-at="ads">📢 الإعلانات</button><button data-at="sup">🎧 الدعم</button><button data-at="feat">🔧 الميزات</button><button data-at="push">📣 إشعار للكل</button><button data-at="force">⬆️ التحديث</button><button data-at="deleted">🗑 المحذوفة</button><button data-at="log">📜 السجل</button></div>
       <div class="msg" id="admMsg"></div>
     </div>
     <div class="pagecol" id="admBody"></div>
@@ -2890,7 +2900,7 @@ if (typeof module !== "undefined") module.exports = { ZX_I18N };
     Object.assign(window.ZX_EN = window.ZX_EN || {}, { "شكل القطع": "Piece set", "ألوان القطع تعمل مع شكل زيكراكس فقط.": "Piece colours work with the ZIGRAX set only.",
       "🔊 الصوت والموسيقى": "🔊 Sound and music", "🔈 جرّب الأصوات": "🔈 Test sounds", "موسيقى خلفية": "Background music", "مستوى الموسيقى": "Music volume",
       "🎬 الجولة التعريفية": "🎬 App tour", "🎬 شاهد الجولة التعريفية": "🎬 Watch the app tour", "ℹ️ حقوق الرسومات": "ℹ️ Artwork credits",
-      "تخطي": "Skip", "→ السابق": "← Back", "♟ تحليل · لعب · تدريب": "♟ Analyse · Play · Train" }, {"إعداد وضعية":"Set up position","اختر قطعة واضغط على أي مربع لوضعها، أو اسحب القطع لتغيير مكانها":"Pick a piece and tap any square to place it, or drag pieces to move them","اسحب أي قطعة لمكان جديد، أو اضغط عليها ثم على المربع. اختر قطعة من فوق أو من تحت حتى تضيفها":"Drag any piece to a new square, or tap it and then the square. Pick a piece above or below to add it","اضغط على أي قطعة حتى تمسحها":"Tap any piece to remove it","اضغط على المربعات حتى تضع القطعة المختارة (اضغط على نفس القطعة مرة ثانية لمسحها":"Tap squares to place the chosen piece (tap the same piece again to remove it","نقل":"Move","مسح":"Erase","فارغة":"Empty","البداية":"Start","دور الأبيض":"White to move","دور الأسود":"Black to move","التبييت":"Castling","قصير":"short","طويل":"long","لازم يكون على الرقعة ملك أبيض واحد وملك أسود واحد بالضبط":"The board needs exactly one white king and one black king","ما يصير يكون بيدق على الصف الأول أو الأخير":"Pawns can't stand on the first or last rank","ما يصير يكون أكثر من 8 بيادق لكل لون":"No more than 8 pawns per colour","الملكان ما يصير يكونون جنب بعض":"The two kings can't stand next to each other","الوضعية غير صالحة":"Invalid position","الملك الأسود مكشوف (عليه كش) والدور مو دوره. غيّر الدور أو حرّك القطع":"The black king is in check but it is not Black's turn. Change the side to move or move the pieces","الملك الأبيض مكشوف (عليه كش) والدور مو دوره. غيّر الدور أو حرّك القطع":"The white king is in check but it is not White's turn. Change the side to move or move the pieces","أظهر أفضل نقلة تلقائياً في كل وضعية":"Show the best move automatically in every position","المحرك يبحث عن أفضل نقلة":"The engine is looking for the best move","تاريخ الشطرنج":"Chess history","جديد":"New","اللغة":"Language","الأبيض":"White","الأسود":"Black","تحليل · لعب · تدريب":"Analyse · Play · Train","تحليل":"Analyse","لعب":"Play","تدريب":"Train","نقل القطع":"Move pieces","مسح قطعة":"Erase a piece","ليش تريد تحذف حسابك":"Why do you want to delete your account","اختياري":"optional","يساعدنا نحسّن التطبيق":"it helps us improve the app","شرح الموقف":"Explain the position","تقرير المباراة":"Game report","رجوع للقائمة":"Back to the list","تختفي كل رسالة عن الطرفين بعد {#} ساعة من مشاهدتها":"Each message disappears for both sides {#} hours after it is seen","وتُحذف نهائياً من الخادم بعد {#} يوماً من إرسالها":"and is deleted from the server for good {#} days after it was sent","قد تطّلع الإدارة على الرسائل والمباريات عند الإبلاغ أو الاشتباه بمخالفة":"Admins may review messages and games after a report or a suspected violation","لحماية المستخدمين":"to protect users","جاري التسجيل":"Recording","إغلاق ومتابعة التحليل":"Close and continue the analysis","تفاصيل إضافية":"More details","تختفي الرسائل عن الطرفين بعد {#} ساعة من مشاهدتها":"Messages disappear for both sides {#} hours after they are seen","وتبقى لدى الإدارة لأغراض الحماية حتى تُحذف نهائياً بعد {#} يوماً من إرسالها":"and stay with the admins for safety until they are deleted for good {#} days after being sent","وقد تطّلع عليها الإدارة وعلى المباريات عند الإبلاغ أو الاشتباه بمخالفة":"and admins may review them and the games after a report or a suspected violation","السابق":"Back","ألوان القطع تعمل مع شكل زيكراكس فقط":"Piece colours work with the ZIGRAX set only","الصوت والموسيقى":"Sound and music","جرّب الأصوات":"Test sounds","الجولة التعريفية":"App tour","شاهد الجولة التعريفية":"Watch the app tour","حقوق الرسومات":"Artwork credits","محرك ZIGRAX وقطع الشطرنج والرسومات من تصميم التطبيق نفسه، والتحليل بمحرك Stockfish {#} المفتوح المصدر":"The ZIGRAX engine, the chess pieces and the graphics are made for this app, and the analysis uses the open-source Stockfish {#} engine","الاسكوتش":"Scotch","النيمزو-هندي":"Nimzo-Indian","الفيينا":"Vienna","البيرك":"Pirc","الدفاع الهولندي":"Dutch Defense","الدفاع الروسي":"Russian Defense","الدفاع الروسي (بتروف":"Russian Defense (Petrov","اختر نقلة أو ابدأ الدرس، وسيظهر هنا سجل النقلات مع شرح كل واحدة":"Pick a move or start the lesson; the move log with an explanation of each move appears here","لغزاً في {#} مرحلة":"puzzles in {#} stages","كلها مختارة من قاعدة ألغاز Lichess المفتوحة، وكل لغز حلّه وقيّمه آلاف اللاعبين: أول {#} سهلة، بعدها {#} متوسطة، والباقي صعبة وصعبة جداً حتى خارقة الصعوبة. أول لغز من كل مرحلة مفتوح للتجربة":"all from the open Lichess puzzle database, each one solved and rated by thousands of players: the first {#} are easy, then {#} medium, and the rest hard and very hard up to extreme. The first puzzle of every stage is open to try","سهل":"Easy","متوسط":"Medium","صعب":"Hard","صعب جداً":"Very hard","أستاذ":"Master","أستاذ دولي":"International master","جراندماستر":"Grandmaster","خارق الصعوبة":"Extreme","محلول {#} من {#}":"Solved {#} of {#}","اضغط أي رقم لفتح اللغز":"tap any number to open that puzzle","تقييم المرحلة":"Stage rating","البيدق وحده":"Pawn only","تقنيات متقدمة":"advanced techniques","الملك أمام البيدق":"King in front of the pawn","سباق الملوك":"The kings' race","الدفاع أمام البيدق":"Defending in front of the pawn","بيدق الرخ يحتاج الركن":"The rook pawn needs the corner","نهايات الرخ المتقدمة":"Advanced rook endings","قطع الملك بالرخ":"Cutting off the king with the rook","الرخ النشط يكسب البيدق":"The active rook wins the pawn","اختر كورساً من القائمة":"Pick a course from the list","مقترح لمن تقييمهم أقل من":"Suggested for ratings below","ملء الشاشة":"Full screen","تصغير الشاشة":"Exit full screen","شجرة الافتتاح":"Opening tree","كل التفرعات، والأخضر خط أتقنته":"Every branch; green means mastered","الأفخاخ":"Traps","أفخاخ مشهورة: انصبها أو تجنّبها":"Famous traps: set them or dodge them","حلّل من هنا":"Analyse from here","حلّل من هذه الوضعية":"Analyse from this position","مبارياتي":"My games","من صورة":"From a photo","التصنيفات":"Rankings"});
+      "تخطي": "Skip", "→ السابق": "← Back", "♟ تحليل · لعب · تدريب": "♟ Analyse · Play · Train" }, {"إعداد وضعية":"Set up position","اختر قطعة واضغط على أي مربع لوضعها، أو اسحب القطع لتغيير مكانها":"Pick a piece and tap any square to place it, or drag pieces to move them","اسحب أي قطعة لمكان جديد، أو اضغط عليها ثم على المربع. اختر قطعة من فوق أو من تحت حتى تضيفها":"Drag any piece to a new square, or tap it and then the square. Pick a piece above or below to add it","اضغط على أي قطعة حتى تمسحها":"Tap any piece to remove it","اضغط على المربعات حتى تضع القطعة المختارة (اضغط على نفس القطعة مرة ثانية لمسحها":"Tap squares to place the chosen piece (tap the same piece again to remove it","نقل":"Move","مسح":"Erase","فارغة":"Empty","البداية":"Start","دور الأبيض":"White to move","دور الأسود":"Black to move","التبييت":"Castling","قصير":"short","طويل":"long","لازم يكون على الرقعة ملك أبيض واحد وملك أسود واحد بالضبط":"The board needs exactly one white king and one black king","ما يصير يكون بيدق على الصف الأول أو الأخير":"Pawns can't stand on the first or last rank","ما يصير يكون أكثر من 8 بيادق لكل لون":"No more than 8 pawns per colour","الملكان ما يصير يكونون جنب بعض":"The two kings can't stand next to each other","الوضعية غير صالحة":"Invalid position","الملك الأسود مكشوف (عليه كش) والدور مو دوره. غيّر الدور أو حرّك القطع":"The black king is in check but it is not Black's turn. Change the side to move or move the pieces","الملك الأبيض مكشوف (عليه كش) والدور مو دوره. غيّر الدور أو حرّك القطع":"The white king is in check but it is not White's turn. Change the side to move or move the pieces","أظهر أفضل نقلة تلقائياً في كل وضعية":"Show the best move automatically in every position","المحرك يبحث عن أفضل نقلة":"The engine is looking for the best move","تاريخ الشطرنج":"Chess history","جديد":"New","اللغة":"Language","الأبيض":"White","الأسود":"Black","تحليل · لعب · تدريب":"Analyse · Play · Train","تحليل":"Analyse","لعب":"Play","تدريب":"Train","نقل القطع":"Move pieces","مسح قطعة":"Erase a piece","ليش تريد تحذف حسابك":"Why do you want to delete your account","اختياري":"optional","يساعدنا نحسّن التطبيق":"it helps us improve the app","شرح الموقف":"Explain the position","تقرير المباراة":"Game report","رجوع للقائمة":"Back to the list","تختفي كل رسالة عن الطرفين بعد {#} ساعة من مشاهدتها":"Each message disappears for both sides {#} hours after it is seen","وتُحذف نهائياً من الخادم بعد {#} يوماً من إرسالها":"and is deleted from the server for good {#} days after it was sent","قد تطّلع الإدارة على الرسائل والمباريات عند الإبلاغ أو الاشتباه بمخالفة":"Admins may review messages and games after a report or a suspected violation","لحماية المستخدمين":"to protect users","جاري التسجيل":"Recording","إغلاق ومتابعة التحليل":"Close and continue the analysis","تفاصيل إضافية":"More details","تختفي الرسائل عن الطرفين بعد {#} ساعة من مشاهدتها":"Messages disappear for both sides {#} hours after they are seen","وتبقى لدى الإدارة لأغراض الحماية حتى تُحذف نهائياً بعد {#} يوماً من إرسالها":"and stay with the admins for safety until they are deleted for good {#} days after being sent","وقد تطّلع عليها الإدارة وعلى المباريات عند الإبلاغ أو الاشتباه بمخالفة":"and admins may review them and the games after a report or a suspected violation","السابق":"Back","ألوان القطع تعمل مع شكل زيكراكس فقط":"Piece colours work with the ZIGRAX set only","الصوت والموسيقى":"Sound and music","جرّب الأصوات":"Test sounds","الجولة التعريفية":"App tour","شاهد الجولة التعريفية":"Watch the app tour","حقوق الرسومات":"Artwork credits","محرك ZIGRAX وقطع الشطرنج والرسومات من تصميم التطبيق نفسه، والتحليل بمحرك Stockfish {#} المفتوح المصدر":"The ZIGRAX engine, the chess pieces and the graphics are made for this app, and the analysis uses the open-source Stockfish {#} engine","الاسكوتش":"Scotch","النيمزو-هندي":"Nimzo-Indian","الفيينا":"Vienna","البيرك":"Pirc","الدفاع الهولندي":"Dutch Defense","الدفاع الروسي":"Russian Defense","الدفاع الروسي (بتروف":"Russian Defense (Petrov","اختر نقلة أو ابدأ الدرس، وسيظهر هنا سجل النقلات مع شرح كل واحدة":"Pick a move or start the lesson; the move log with an explanation of each move appears here","لغزاً في {#} مرحلة":"puzzles in {#} stages","كلها مختارة من قاعدة ألغاز Lichess المفتوحة، وكل لغز حلّه وقيّمه آلاف اللاعبين: أول {#} سهلة، بعدها {#} متوسطة، والباقي صعبة وصعبة جداً حتى خارقة الصعوبة. أول لغز من كل مرحلة مفتوح للتجربة":"all from the open Lichess puzzle database, each one solved and rated by thousands of players: the first {#} are easy, then {#} medium, and the rest hard and very hard up to extreme. The first puzzle of every stage is open to try","سهل":"Easy","متوسط":"Medium","صعب":"Hard","صعب جداً":"Very hard","أستاذ":"Master","أستاذ دولي":"International master","جراندماستر":"Grandmaster","خارق الصعوبة":"Extreme","محلول {#} من {#}":"Solved {#} of {#}","اضغط أي رقم لفتح اللغز":"tap any number to open that puzzle","تقييم المرحلة":"Stage rating","البيدق وحده":"Pawn only","تقنيات متقدمة":"advanced techniques","الملك أمام البيدق":"King in front of the pawn","سباق الملوك":"The kings' race","الدفاع أمام البيدق":"Defending in front of the pawn","بيدق الرخ يحتاج الركن":"The rook pawn needs the corner","نهايات الرخ المتقدمة":"Advanced rook endings","قطع الملك بالرخ":"Cutting off the king with the rook","الرخ النشط يكسب البيدق":"The active rook wins the pawn","اختر كورساً من القائمة":"Pick a course from the list","مقترح لمن تقييمهم أقل من":"Suggested for ratings below","ملء الشاشة":"Full screen","تصغير الشاشة":"Exit full screen","شجرة الافتتاح":"Opening tree","كل التفرعات، والأخضر خط أتقنته":"Every branch; green means mastered","الأفخاخ":"Traps","أفخاخ مشهورة: انصبها أو تجنّبها":"Famous traps: set them or dodge them","حلّل من هنا":"Analyse from here","حلّل من هذه الوضعية":"Analyse from this position","مبارياتي":"My games","من صورة":"From a photo","التصنيفات":"Rankings","التحليل والمراجعة":"Analysis & review","التدريب":"Training","اللعب والمجتمع":"Play & community","حسابي":"My account"});
     var D = window.ZX_EN || {};
     if (TR) { var D2 = {}; for (var k in D) D2[k] = TR[D[k]] || D[k]; D = D2; }
     ZX_I18N.setDict(D);
@@ -9469,7 +9479,7 @@ const APP_BUILD = 34;
   // ----- position from a picture
   const E12 = {"ph_btn":["من صورة","From a photo"],"ph_busy":["📷 جاري قراءة الرقعة من الصورة…","📷 Reading the board from the picture…"],"ph_none":["ما لكيت رقعة شطرنج بالصورة. استخدم لقطة شاشة أو صوّر الرقعة كاملة ومن فوك.","No chessboard found in the picture. Use a screenshot, or photograph the whole board from above."],"ph_check":["📷 تأكد من القطع ومن الدور قبل التحليل — صحّح أي قطعة غلط بالسحب أو من القوائم.","📷 Check the pieces and whose turn it is before analysing — fix any wrong piece by dragging or from the palettes."],"ph_bad":["ما كدرت أفتح الصورة.","Could not open the picture."]};
   const t12 = k => E12[k] ? T(E12[k][0], E12[k][1]) : k;
-  function photoPick() { const i = $("photoIn"); i.value = ""; i.click(); }
+  function photoPick() { if (ftBlocked("photo")) return; const i = $("photoIn"); i.value = ""; i.click(); }
   let phTimer = null;
   function photoLoad(file) {
     if (!file) return;
@@ -10125,7 +10135,7 @@ const APP_BUILD = 34;
     $("btnPass").onclick = changePassword;
     $("btnSignOut").onclick = () => { signOut(); };
   }
-  function drawerOpen(on) { $("drawer").classList.toggle("open", on); $("drawerBack").hidden = !on; if (on) renderDrawer(); if (typeof adNativeMove === "function") adNativeMove(); }
+  function drawerOpen(on) { $("drawer").classList.toggle("open", on); $("drawerBack").hidden = !on; if (on) { renderDrawer(); ftApply(); ftLoad(); } if (typeof adNativeMove === "function") adNativeMove(); }
   // Profile photo: square crop, 160 px, compressed (WebP when the device supports it, else JPEG)
   // until it is under ~18 KB, so it uploads fast and shows quickly in friend lists.
   const AVATAR_MAX = 24000;   // characters of the data URL (the server refuses more than 40000)
@@ -12869,6 +12879,7 @@ const APP_BUILD = 34;
 
   // ---- one conversation (friends page)
   function msOpen(peer) {
+    if (ftBlocked("messages")) return;
     if (typeof adNativeHide === "function") adNativeHide();
     MS.peer = peer; MS.list = []; MS.last = 0; MS.blockArm = false;
     $("frMain").hidden = true; $("frChat").hidden = false;
@@ -13116,7 +13127,7 @@ const APP_BUILD = 34;
     document.querySelectorAll("#admTabs [data-at]").forEach(b => b.classList.toggle("on", b.dataset.at === tab));
     setMsg("admMsg", "", "");
     window.scrollTo(0, 0);
-    if (tab === "ov") admOverview(); else if (tab === "rep") admReports(); else if (tab === "users") admUsers(); else if (tab === "words") admWords(); else if (tab === "cheat") admCheatTab(); else if (tab === "live") admLive(); else if (tab === "act") admFeed(); else if (tab === "guests") admGuests(); else if (tab === "sec") admSec(); else if (tab === "ads") admAds(); else if (tab === "sup") admSup(); else if (tab === "push") admPush(); else if (tab === "force") admForce(); else if (tab === "deleted") admDeleted(); else admLog();
+    if (tab === "ov") admOverview(); else if (tab === "rep") admReports(); else if (tab === "users") admUsers(); else if (tab === "words") admWords(); else if (tab === "cheat") admCheatTab(); else if (tab === "live") admLive(); else if (tab === "act") admFeed(); else if (tab === "guests") admGuests(); else if (tab === "sec") admSec(); else if (tab === "ads") admAds(); else if (tab === "sup") admSup(); else if (tab === "feat") admFeatures(); else if (tab === "push") admPush(); else if (tab === "force") admForce(); else if (tab === "deleted") admDeleted(); else admLog();
   }
   function admBadge(n) {
     ADM.openReports = n || 0;
@@ -15039,6 +15050,7 @@ const APP_BUILD = 34;
     $("exClose").onclick = () => $("exModal").classList.remove("show");
     $("fExplain").onclick = async () => {
       if (!EX.cur) return;
+      if (ftBlocked("explain")) return;
       const openEx = () => { $("exModal").classList.add("show"); if (!EX.data) exShow(EX.cur.g, EX.cur.m); };
       if (!EX.data && typeof adSlotWanted === "function" && adSlotWanted("explain_ad") && typeof adRewarded === "function") {
         const ok = await adRewarded("explain_ad");
@@ -17109,6 +17121,84 @@ const APP_BUILD = 34;
     });
   }
 
+  // ======================================================================
+  // FEATURE SWITCHES (1.0.22): the admin can stop any feature for everyone and say why.
+  // zx_features_get() lists what is stopped; read at start, every 2 minutes and when the menu opens.
+  // ======================================================================
+  const FT_LIST = [
+    ["coach", "🎓", "التحليل مع مدرب", "Coach analysis"], ["deep", "🧠", "التحليل المعمق", "Deep analysis"], ["games", "🗂️", "مبارياتي", "My games"],
+    ["photo", "📷", "الوضعية من صورة", "Position from a photo"], ["explain", "📖", "شرح الموقف", "Position explainer"], ["share", "📸", "مشاركة تقرير المباراة", "Share game report"],
+    ["openings", "📖", "الافتتاحيات", "Openings"], ["puzzles", "🧩", "الألغاز", "Puzzles"], ["endgames", "♚", "النهايات", "Endgames"], ["courses", "📚", "كورسات", "Courses"], ["history", "📜", "تاريخ الشطرنج", "Chess history"],
+    ["bot", "🤖", "العب ضد زيكراكس", "Play ZIGRAX"], ["friends", "👥", "الأصدقاء", "Friends"], ["messages", "💬", "الرسائل", "Messages"], ["tournaments", "🏆", "البطولات", "Tournaments"],
+    ["leaders", "🏅", "المتصدرون", "Leaderboard"], ["rank", "🌍", "التصنيفات", "Rankings"], ["support", "🎧", "الدعم", "Support"],
+  ];
+  let FT = store.get("zx_ft", {}) || {};
+  const ftName = k => { const f = FT_LIST.find(x => x[0] === k); return f ? T(f[2], f[3]) : k; };
+  const ftOff = k => !!(FT[k]);
+  async function ftLoad() {
+    try {
+      const rows = await sb.rest("rpc/zx_features_get", { method: "POST", body: {}, auth: false });
+      const n = {}; for (const r of rows || []) n[r.key] = { reason: r.reason || "", at: r.updated_at };
+      FT = n; store.set("zx_ft", FT); ftApply();
+    } catch (e) { }
+  }
+  function ftApply() {
+    document.querySelectorAll("#dnav [data-page]").forEach(b => {
+      const k = b.dataset.page, off = ftOff(k), sp = b.querySelector("span");
+      b.classList.toggle("ftoff", off);
+      const old = b.querySelector(".ftwhy"); if (old) old.remove();
+      if (off && sp) { const s = document.createElement("small"); s.className = "ftwhy"; s.textContent = "⛔ " + (FT[k].reason || T("متوقفة مؤقتاً", "Paused for now")); sp.appendChild(s); }
+    });
+    let bar = $("ftBar");
+    if (!bar) { bar = document.createElement("div"); bar.id = "ftBar"; const h = document.querySelector("header"); if (h) h.insertAdjacentElement("afterend", bar); else return; }
+    const keys = Object.keys(FT), sig = keys.map(k => k + ":" + FT[k].reason).join("|");
+    if (!keys.length || store.get("zx_ft_hide", "") === sig) { bar.classList.remove("show"); return; }
+    bar.innerHTML = `<span>⛔</span><div>${keys.map(k => `<b>${esc(ftName(k))}</b> ${T("متوقفة مؤقتاً", "is paused")}${FT[k].reason ? " — " + esc(FT[k].reason) : ""}`).join("<br>")}</div><button class="sm" aria-label="${T("إخفاء", "Hide")}">✕</button>`;
+    bar.querySelector("button").onclick = () => { store.set("zx_ft_hide", sig); bar.classList.remove("show"); };
+    bar.classList.add("show");
+  }
+  // true when the feature is stopped (and tells the user why); the admin is let through with a note
+  function ftBlocked(k) {
+    if (!ftOff(k)) return false;
+    if (session && session.is_admin) { toast("🛡 " + T("هذه الميزة متوقفة للمستخدمين", "This feature is paused for users")); return false; }
+    zxT("feature", "blocked", k);
+    let m = $("ftModal");
+    if (!m) { m = document.createElement("div"); m.className = "modal"; m.id = "ftModal"; document.body.appendChild(m); }
+    m.innerHTML = `<div class="authcard" style="text-align:center;max-width:380px"><div style="font-size:38px;line-height:1">⛔</div>
+      <h3 style="margin:8px 0 6px">${esc(ftName(k))} ${T("متوقفة مؤقتاً", "is paused for now")}</h3>
+      <div class="note" style="font-size:14px;line-height:1.7">${FT[k].reason ? esc(FT[k].reason) : T("نعمل على تحسينها وسترجع قريباً.", "We're working on it; it will be back soon.")}</div>
+      <button class="primary" style="width:100%;margin-top:14px">${T("حسناً", "OK")}</button></div>`;
+    m.querySelector("button").onclick = () => m.classList.remove("show");
+    m.onclick = e => { if (e.target === m) m.classList.remove("show"); };
+    m.classList.add("show");
+    return true;
+  }
+  setTimeout(() => { ftApply(); ftLoad(); }, 1500);
+  setInterval(() => { if (!document.hidden) ftLoad(); }, 120000);
+
+  // admin tab
+  async function admFeatures() {
+    admLoading();
+    await ftLoad();
+    const row = f => { const k = f[0], off = ftOff(k);
+      return `<div class="ftrow" data-ftk="${k}"><span style="font-size:20px">${f[1]}</span><div><b>${esc(T(f[2], f[3]))}</b>
+        <div class="ftst" style="color:${off ? "#f08a7e" : "#8ee0a6"}">${off ? "⛔ " + T("متوقفة", "Paused") + (FT[k].at ? " · " + new Date(FT[k].at).toLocaleString(window.ZX_LANG === "ar" ? "ar-IQ" : undefined) : "") : "✅ " + T("تعمل", "On")}</div></div>
+        <input type="text" maxlength="300" placeholder="${T("سبب الإيقاف (يظهر للجميع)", "Reason (shown to everyone)")}" value="${esc(off ? FT[k].reason : "")}">
+        <div class="ftbtns">${off ? `<button class="sm primary" data-ftgo="on">▶ ${T("تشغيل", "Turn on")}</button><button class="sm" data-ftgo="save">💾 ${T("حفظ السبب", "Save reason")}</button>`
+          : `<button class="sm" data-ftgo="off" style="background:rgba(220,80,60,.18);border-color:rgba(220,80,60,.5)">⛔ ${T("إيقاف", "Stop")}</button>`}</div></div>`; };
+    admBody().innerHTML = `<div class="card"><h3>🔧 ${T("إيقاف الميزات", "Feature switches")}</h3>
+      <div class="note">${T("أوقف أي ميزة للجميع واكتب السبب: يظهر بشريط أعلى التطبيق، وبجانبها في القائمة، وعند محاولة فتحها. الإدارة تبقى تقدر تدخل.", "Stop any feature for everyone with a reason: it shows in a bar at the top, next to it in the menu and when someone opens it. Admins can still enter.")}</div>
+      ${FT_LIST.map(row).join("")}</div>`;
+    admBody().querySelectorAll("[data-ftgo]").forEach(b => b.onclick = async () => {
+      const r = b.closest("[data-ftk]"), k = r.dataset.ftk, how = b.dataset.ftgo, reason = r.querySelector("input").value.trim();
+      if (how === "off" && !reason && !confirm(T("توقف الميزة بدون سبب؟", "Stop it without a reason?"))) return;
+      b.disabled = true;
+      try { await admCall("admin_feature_set", { p_key: k, p_off: how !== "on", p_reason: how === "on" ? "" : reason });
+        store.set("zx_ft_hide", ""); toast(how === "on" ? "✅ " + T("رجعت الميزة", "Feature is back") : "⛔ " + T("تم الإيقاف", "Stopped")); admFeatures(); }
+      catch (e) { b.disabled = false; }
+    });
+  }
+
   // ----- pages: every section lives in the side menu
   const PAGE_EL = { analysis: "app", openings: "openApp", puzzles: "pzApp", endgames: "egApp", bot: "botApp", courses: "coApp", soon: "coSoon", friends: "frApp", tournaments: "trApp", leaders: "lbApp", rank: "rkApp", history: "hsApp", games: "mgApp", deep: "daApp", profile: "profApp", settings: "setApp", coach: "coachApp", support: "supApp", admin: "admApp" };
   const PAGE_TITLE = { analysis: ["التحليل", "Analysis"], bot: ["العب ضد زيكراكس", "Play ZIGRAX"], friends: ["الأصدقاء", "Friends"], tournaments: ["البطولات", "Tournaments"], leaders: ["المتصدرون", "Leaderboard"], rank: ["التصنيفات", "Rankings"], deep: ["التحليل المعمق", "Deep analysis"],
@@ -17117,6 +17207,7 @@ const APP_BUILD = 34;
   let curPage = "analysis";
   function showTab(which) {
     if (!PAGE_TITLE[which]) which = "analysis";
+    if (ftBlocked(which)) return;
     if (which === "admin" && !(session && session.is_admin)) which = "analysis";
     focusOff();
     if (typeof adNativeHide === "function") adNativeHide();
@@ -17350,6 +17441,7 @@ const APP_BUILD = 34;
   }
 
   function rvShareCard() {
+    if (ftBlocked("share")) return;
     const h = RV.h || (loadedGame && loadedGame.headers) || headers || {};
     const wn = h.White || T("الأبيض", "White"), bn = h.Black || T("الأسود", "Black");
     const aw = lastAcc && lastAcc.w != null ? Math.round(lastAcc.w) : "—";
@@ -17639,7 +17731,7 @@ const APP_BUILD = 34;
     return g;
   }
   async function supRpc(fn, body) {
-    return sb.rpc(fn, body || {});
+    return sb.rest("rpc/" + fn, { method: "POST", body: body || {} });
   }
   async function supLoad() {
     const box = $("supList"); if (!box) return;
