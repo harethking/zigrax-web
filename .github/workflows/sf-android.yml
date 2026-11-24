@@ -12,11 +12,12 @@ jobs:
       - name: Build
         run: |
           set -e
+          sed -i 's/    uci\.loop();/    uci->loop();/' sf/src/main.cpp   # the native path of stockfish.js has a typo
           export PATH="$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
           echo "NDK $ANDROID_NDK_LATEST_HOME"; aarch64-linux-android29-clang++ --version | head -1
           mkdir -p out/arm64-v8a out/armeabi-v7a out/test
           cd sf/src
-          b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 LITE_NET=yes > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; ls -la stockfish; file stockfish; }
+          b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 LITE_NET=yes EXTRALDFLAGS="-Wl,-z,max-page-size=16384" > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; [ "$2" = ndk ] && llvm-strip stockfish; ls -la stockfish; file stockfish; }
           b armv8-dotprod ndk && cp stockfish ../../out/arm64-v8a/libzxsf_dp.so
           b armv8 ndk && cp stockfish ../../out/arm64-v8a/libzxsf.so
           b armv7-neon ndk && cp stockfish ../../out/armeabi-v7a/libzxsf.so
