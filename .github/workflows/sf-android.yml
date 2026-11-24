@@ -17,17 +17,19 @@ jobs:
           echo "NDK $ANDROID_NDK_LATEST_HOME"; aarch64-linux-android29-clang++ --version | head -1
           mkdir -p out/arm64-v8a out/armeabi-v7a out/test
           cd sf/src
-          b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 LITE_NET=yes EXTRALDFLAGS="-Wl,-z,max-page-size=16384" > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; [ "$2" = ndk ] && llvm-strip stockfish; ls -la stockfish; file stockfish; }
-          b armv8-dotprod ndk && cp stockfish ../../out/arm64-v8a/libzxsf_dp.so
-          b armv8 ndk && cp stockfish ../../out/arm64-v8a/libzxsf.so
-          b armv7-neon ndk && cp stockfish ../../out/armeabi-v7a/libzxsf.so
-          b x86-64-avx2 gcc && cp stockfish ../../out/test/stockfish-x86
+          b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 $3 LITE_NET=yes EXTRALDFLAGS="-Wl,-z,max-page-size=16384" > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; [ "$2" = ndk ] && llvm-strip stockfish; ls -la stockfish; file stockfish; }
+          b armv8-dotprod ndk COMPCXX=aarch64-linux-android26-clang++ && cp stockfish ../../out/arm64-v8a/libzxsf_dp.so
+          b armv8 ndk COMPCXX=aarch64-linux-android26-clang++ && cp stockfish ../../out/arm64-v8a/libzxsf.so
+          b armv7-neon ndk COMPCXX=armv7a-linux-androideabi26-clang++ && cp stockfish ../../out/armeabi-v7a/libzxsf.so
+          b x86-64-avx2 clang && cp stockfish ../../out/test/stockfish-x86
           ls -la nn-*.nnue
       - name: Check (desktop copy of the same engine)
         run: |
           cd out/test
-          printf 'uci\nsetoption name Hash value 16\nisready\nposition startpos moves e2e4 e7e5 g1f3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "^id name|nodes 3|bestmove" | tail -4
-          printf 'uci\nisready\nsetoption name Threads value 2\nposition fen r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "bestmove" 
+          printf 'uci\nsetoption name Hash value 16\nisready\nposition startpos moves e2e4 e7e5 g1f3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "^id name|bestmove" | tail -3
+          for t in 1 3; do s=$(date +%s%N); for f in "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3" "r2q1rk1/ppp2ppp/2np1n2/2b1p1B1/2B1P1b1/2NP1N2/PPP2PPP/R2Q1RK1 w - - 4 8" "8/5pk1/6p1/3P4/2P2K2/8/8/8 w - - 0 50"; do printf "uci\nsetoption name Threads value $t\nisready\nposition fen $f\ngo nodes 300000\n" | timeout 60 ./stockfish-x86 | grep -m1 bestmove >/dev/null; done; echo "threads $t: 3 x 300k nodes in $(( ($(date +%s%N)-s)/1000000 )) ms"; done
+          file stockfish-x86
+          printf 'uci\nisready\nsetoption name Threads value 3\nposition fen r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "bestmove" 
       - uses: actions/upload-artifact@v4
         with:
           name: zxsf-android
