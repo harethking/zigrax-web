@@ -17,12 +17,13 @@ jobs:
           sed -i 's/    uci\.loop();/    uci->loop();/' sf/src/main.cpp   # the native path of stockfish.js has a typo
           export PATH="$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
           echo "NDK $ANDROID_NDK_LATEST_HOME"; aarch64-linux-android29-clang++ --version | head -1
-          mkdir -p out/arm64-v8a out/armeabi-v7a out/test
+          mkdir -p out/arm64-v8a out/armeabi-v7a out/x86_64 out/test
           cd sf/src
           b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 $3 LITE_NET=yes EXTRALDFLAGS="-Wl,-z,max-page-size=16384" > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; [ "$2" = ndk ] && llvm-strip stockfish; ls -la stockfish; file stockfish; }
           b armv8-dotprod ndk COMPCXX=aarch64-linux-android26-clang++ && cp stockfish ../../out/arm64-v8a/libzxsf_dp.so
           b armv8 ndk COMPCXX=aarch64-linux-android26-clang++ && cp stockfish ../../out/arm64-v8a/libzxsf.so
           b armv7-neon ndk COMPCXX=armv7a-linux-androideabi26-clang++ && cp stockfish ../../out/armeabi-v7a/libzxsf.so
+          b x86-64-sse41-popcnt ndk COMPCXX=x86_64-linux-android26-clang++ && cp stockfish ../../out/x86_64/libzxsf.so   # emulators, Chromebooks
           b x86-64-avx2 clang && cp stockfish ../../out/test/stockfish-x86
           ls -la nn-*.nnue
       - name: Check (desktop copy of the same engine)
