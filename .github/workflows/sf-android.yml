@@ -1,0 +1,33 @@
+# Builds the native Stockfish engine (the same "lite" network as the app's WebAssembly engine) for Android phones.
+# The binaries go into the ZIGRAX Android app (app/src/main/jniLibs). Stockfish is GPL v3.
+name: Stockfish for Android
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Source (stockfish.js 19.0.1 = Stockfish 19 with the lite network)
+        run: git clone -q --depth 1 --branch v19.0.1 https://github.com/nmrugg/stockfish.js.git sf
+      - name: Build
+        run: |
+          set -e
+          export PATH="$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
+          echo "NDK $ANDROID_NDK_LATEST_HOME"; aarch64-linux-android29-clang++ --version | head -1
+          mkdir -p out/arm64-v8a out/armeabi-v7a out/test
+          cd sf/src
+          b() { make -s clean >/dev/null 2>&1 || true; make -j4 build ARCH=$1 COMP=$2 LITE_NET=yes > /tmp/log_$1.txt 2>&1 || { tail -60 /tmp/log_$1.txt; exit 1; }; ls -la stockfish; file stockfish; }
+          b armv8-dotprod ndk && cp stockfish ../../out/arm64-v8a/libzxsf_dp.so
+          b armv8 ndk && cp stockfish ../../out/arm64-v8a/libzxsf.so
+          b armv7-neon ndk && cp stockfish ../../out/armeabi-v7a/libzxsf.so
+          b x86-64-avx2 gcc && cp stockfish ../../out/test/stockfish-x86
+          ls -la nn-*.nnue
+      - name: Check (desktop copy of the same engine)
+        run: |
+          cd out/test
+          printf 'uci\nsetoption name Hash value 16\nisready\nposition startpos moves e2e4 e7e5 g1f3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "^id name|nodes 3|bestmove" | tail -4
+          printf 'uci\nisready\nsetoption name Threads value 2\nposition fen r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3\ngo nodes 300000\n' | timeout 60 ./stockfish-x86 | grep -E "bestmove" 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zxsf-android
+          path: out/
