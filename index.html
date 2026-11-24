@@ -16076,7 +16076,7 @@ const APP_BUILD = 28;
     if (src === "cc") return L.map(x => ({ u: x[0], name: x[1] || x[0], tit: x[2] || "", r: x[3], n: x[4], av: x[5] || "", c: scope === "world" ? (x[6] || "") : scope === "arab" ? (x[6] || "") : scope }));
     return L.map(x => ({ u: "", name: x[0], tit: x[1] || "", r: x[2], n: 0, by: x[4], c: FIDE_ISO[x[5]] !== undefined ? FIDE_ISO[x[5]] : "", fed: x[5], id: x[3] }));
   }
-  const rkAv = p => `<span class="lbav">${p.av && /^https:\/\/images\.chesscomfiles\.com\//.test(p.av) ? `<img alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(p.av)}">` : `<b>${esc((p.name || "?").charAt(0).toUpperCase())}</b>`}</span>`;
+  const rkAv = p => `<span class="lbav">${p.av && /^https:\/\/images\.chesscomfiles\.com\//.test(p.av) ? `<img alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(p.av)}" onerror="this.outerHTML='<b>${esc((Array.from(p.name || "?")[0] || "?").toUpperCase()).replace(/'/g, "")}</b>'">` : `<b>${esc((Array.from(p.name || "?")[0] || "?").toUpperCase())}</b>`}</span>`;
   async function rkShow() {
     const box = $("rkBody"); if (!box) return;
     store.set("zx_rk", { src: RK.src, cat: RK.cat, scope: RK.scope });
