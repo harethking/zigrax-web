@@ -3,6 +3,8 @@
 name: Stockfish for Android
 on:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,3 +37,10 @@ jobs:
         with:
           name: zxsf-android
           path: out/
+      - name: Keep the binaries on the branch sf-android-bin
+        run: |
+          cd out && rm -rf test && cp ../sf/Copying.txt COPYING.txt 2>/dev/null || true
+          git init -q && git checkout -q -b sf-android-bin
+          git config user.name zigrax-ci && git config user.email zigrax-ci@users.noreply.github.com
+          git add -A && git commit -qm "native Stockfish 19 lite for Android (from nmrugg/stockfish.js v19.0.1, GPL v3)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" sf-android-bin
