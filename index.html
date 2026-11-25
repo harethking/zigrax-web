@@ -13415,10 +13415,29 @@ const APP_BUILD = 42;
         <div class="msg" id="admUMsg"></div>
         <div class="note">${T("الإيقاف يمنع تسجيل الدخول واللعب والمراسلة، ويلغي مبارياته الجارية. الحذف نهائي ولا يمكن التراجع عنه.", "A ban blocks signing in, games and messages and cancels live games. Deletion is final.")}</div></div>`}
       ${pen.length ? `<div class="card"><h3>📜 ${T("سجل العقوبات", "Penalty history")}</h3>${pen.map(p => `<div class="fritem"><span class="nm"><b>${kindName(p.kind)}${p.until ? " · " + esc(untilText(p.until)) : ""}</b><small>${esc(p.reason)} · ${esc(admDate(p.created_at))}${p.by ? " · " + esc(p.by) : ""}${p.revoked_at ? " · " + T("رُفعت", "lifted") : ""}</small></span></div>`).join("")}</div>` : ""}
+      ${u.is_admin ? "" : `<div class="card"><h3>🔑 ${T("تغيير رمز الدخول", "Set a new password")}</h3>
+        <div class="namerow"><input id="admPw" type="password" dir="ltr" autocomplete="new-password" minlength="8" maxlength="72" placeholder="${T("الرمز الجديد (8 أحرف أو أكثر)", "New password (8+ characters)")}"><button class="sm" id="admPwEye" title="${T("إظهار", "Show")}">👁</button></div>
+        <div class="admact"><button class="sm primary" id="admPwSet">${T("حفظ الرمز الجديد", "Save new password")}</button></div>
+        <div class="msg" id="admPwMsg"></div>
+        <div class="note">${T("لما المستخدم ينسى رمزه: تكتب رمز جديد وتبلّغه بيه، ويدخل بيه. الرمز القديم ما ينعرض لأن محفوظ مشفّر. كل تغيير ينسجل بسجل الإدارة.", "When a user forgets the password: set a new one and tell them. The old one can't be shown (stored hashed). Every change is logged.")}</div></div>`}
       <div class="card"><h3>💬 ${T("المحادثات", "Conversations")}</h3><div id="admThreads"><button class="sm" id="admLoadThreads">${T("عرض المحادثات", "Show conversations")}</button></div></div>
       <div class="card"><h3>♟ ${T("المباريات", "Games")}</h3><div id="admGames"><button class="sm" id="admLoadGames">${T("عرض المباريات", "Show games")}</button></div></div>
       <div class="card"><h3>👣 ${T("النشاط داخل التطبيق", "Activity in the app")}</h3><button class="sm" id="admLoadAct">${T("عرض كل ما فعله", "Show everything they did")}</button></div>`;
     $("admLoadAct").onclick = () => admTimeline("user", uid, u.username, () => admUser(uid, back));
+    if ($("admPwEye")) $("admPwEye").onclick = () => { const i = $("admPw"); i.type = i.type === "password" ? "text" : "password"; };
+    if ($("admPwSet")) $("admPwSet").onclick = async () => {
+      const pw = $("admPw").value;
+      if (pw.length < 8) { setMsg("admPwMsg", "bad", T("الرمز لازم يكون 8 أحرف أو أكثر.", "At least 8 characters.")); return; }
+      if (ADM.pwArm !== uid) { ADM.pwArm = uid; $("admPwSet").textContent = T("⚠️ اضغط مرة ثانية لتأكيد تغيير رمز ", "⚠️ Press again to change the password of ") + u.username; return; }
+      ADM.pwArm = null; const b = $("admPwSet"); b.disabled = true;
+      try {
+        const r = await fetch(SB_URL + "/functions/v1/zx-admin-pass", { method: "POST", headers: { apikey: SB_KEY, Authorization: "Bearer " + ((await sb.token()) || SB_KEY), "Content-Type": "application/json" }, body: JSON.stringify({ user: uid, password: pw }) });
+        const j = await r.json().catch(() => ({}));
+        if (r.ok && j.ok) { $("admPw").value = ""; setMsg("admPwMsg", "ok", T("✅ تغيّر الرمز. بلّغ المستخدم بالرمز الجديد.", "✅ Password changed. Tell the user the new one.")); }
+        else setMsg("admPwMsg", "bad", ({ admin_target: T("ما ينفع تغيّر رمز مدير ثاني.", "You can't change another admin's password."), forbidden: T("للمدير فقط.", "Admins only."), length: T("الرمز لازم يكون 8–72 حرف.", "8–72 characters.") })[j.error] || (T("ما تغيّر: ", "Failed: ") + esc(j.detail || j.error || ("HTTP " + r.status))));
+      } catch (e) { setMsg("admPwMsg", "bad", T("ما تغيّر: ", "Failed: ") + esc(e.message || e)); }
+      b.disabled = false; b.textContent = T("حفظ الرمز الجديد", "Save new password");
+    };
     if ($("admCopyMail")) $("admCopyMail").onclick = () => { try { navigator.clipboard.writeText(u.email); toast(T("✅ نُسخ البريد", "✅ Email copied")); } catch (e) {} };
     $("admBack").onclick = back || (() => admGo("users"));
     const reload = () => admUser(uid, back);
